@@ -29,8 +29,8 @@ def test_1():
 #    initial = np.array([10,1,1,0])
     pas = np.arange(0.25,1.25,0.25)
     bs = np.arange(0.25,1.25,0.25)
-    m_1 = np.arange(-0.5,1,0.5)
-    m_2 = np.arange(-0.5,1,0.5)
+    m_1 = np.arange(0,1,0.5)
+    m_2 = np.arange(0,1,0.5)
     for a in pas:
         for b in bs:
             for x_0 in m_1:
@@ -38,9 +38,7 @@ def test_1():
                     if x_0==0 and y_0==0:
                         pass
                     initial = np.array([x_0,y_0,a,b])
-                    x,y,t = taylor_system_1(model_1,initial,0,0.1,100)
-                    print('x',x)
-                    print('y',y)
+                    x,y,t = taylor_system_1(model_1,initial,0,0.2,100)
                     fig, ax =plt.subplots(1,2,figsize=(13,8))
                     ax[0].plot(x,y,label='Relational Spending')
                     ax[0].set_xlabel('x')
@@ -54,7 +52,7 @@ def test_1():
                     ax[1].set_title(f'Spending over Time \n x_0 = {np.round(x_0,2)} y_0 = {np.round(y_0,2)} \n a = {np.round(a,2)} b = {np.round(b,2)}')
                     ax[1].legend()
                     plt.tight_layout()
-#                    plt.show()
+                    plt.show()
 
                     plt.savefig(f'figures/mutual_fear{np.round(x_0,2)}_{np.round(y_0,2)}_{np.round(a,2)}_{np.round(b,2)}.jpg',dpi=150)
 

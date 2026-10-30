@@ -31,10 +31,8 @@ pay_freq = 12
 k = -1000
 y0 = 1e5
 
-print(interest(r,freq,pay_freq,t,y0,k))
 
 pay = payment(r,12,10,y0)
-print("Payment ", pay)
 
 t = np.arange(0,30)
 
@@ -75,6 +73,27 @@ x=np.linspace(-1,1)
 #plt.plot(x,ivp_sol_2(1,1,x))
 #plt.show()
 
-plt.plot(x,int_factor(np.log(1000),x))
+#plt.plot(x,int_factor(np.log(1000),x))
+#plt.show()
+
+def exponential(A,n):
+    """
+    Return the matrix exponential of matrix A to n terms
+    """
+    sum = 0
+    k = 0
+    while k <= n :
+        sum += (1/factorial(k))*A**k
+        k += 1
+    return sum
+
+A = np.array([[0,1],[1,0]])
+f = lambda t : exponential(A*t,3)
+
+t = np.linspace(0,1)
+plt.plot(f(t))
 plt.show()
+
+
+
 
