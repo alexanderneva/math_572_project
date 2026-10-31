@@ -1,0 +1,16 @@
+---
+title: "Math 572: Final Project"
+author: Alex Shulhan
+date: "\\today"
+#bibliography: references.bib
+#addtoprule: TRUE
+#addbotrule: TRUE
+#BottomRFooter: "\\footnotesize Page \\thepage"
+output:
+  pdf_document:
+    includes:
+      in_header: "preamble.tex"
+  highlight: zenburn
+---
+
+# Introduction 

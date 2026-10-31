@@ -1,0 +1,78 @@
+\documentclass[12pt]{article}
+\usepackage[colorlinks]{hyperref}
+\input{preamble.tex}
+\title{Math 572: Final Project Report}
+\author{Alexander Shulhan}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  Mutual fear model abstract
+\end{abstract}
+\section{Introduction}
+\section{Formulation of the Mathematical Model}
+\subsection{Model 1}
+The initial value problem for model 1 is given by
+\begin{equation}\label{model1}
+  \begin{bmatrix}
+    x^{\prime}\\
+    y^{\prime}
+  \end{bmatrix} = 
+  \begin{bmatrix}
+    0 & a \\
+    b & 0 
+    \end{bmatrix}
+    \begin{bmatrix}
+      x \\ 
+      y
+  \end{bmatrix},\quad x(0)=x_0,~y(0)=y_0
+\end{equation}
+where $a$ and $b$ represent the spending per unit time of nations $A$ and $B$ respectively
+\section{Solution to the Problem}
+\section{Interpretation of the Results}
+\section{Discusssion}
+
+
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\appendix
+\section{Solving Model 1}
+Following \cite[Chap. 7~]{boyce2013elementary} to solve \ref{model1} we look for a fundamental solution set given by the eigenvectors of the matrix 
+\begin{equation}
+  M := \begin{bmatrix}
+    0 & a \\
+    b & 0 \\
+  \end{bmatrix}.
+\end{equation}
+The characteristic polynomial of $M$ is 
+\begin{eqnarray}
+  p(\lambda) &= \lambda^2 - \text{Tr} M \lambda + \det{M}\\
+	     &= \lambda^2 - ab
+\end{eqnarray}
+Setting $p=0$ and solving for $\lambda$ yields
+\begin{align}
+  \lambda_+ = \sqrt{ab},\quad \lambda_- = -\sqrt{ab}.
+\end{align}
+These will be real valued when $\text{sign}(a)=\text{sign}(b)$ and a $\C$-conjugate pair otherwise. The eigenvector $e_+$ comes from
+\begin{align*}
+  \lambda_+ I - M &= 
+    \begin{bmatrix}
+      \sqrt{ab} & -a \\
+      -b  & \sqrt{ab}
+    \end{bmatrix} & \\
+   &= \begin{bmatrix}\sqrt{ab}&a\\0&0\end{bmatrix} & \left(\frac{-b}{\sqrt{ab}}R_1 \to R_2\right)\\
+\end{align*}
+Hence, $v_+ = (1,-b/\sqrt{ab})$ is an eigenvector for matrix $M$. Similarly, we can find $v_- = (a/\sqrt{ab},1)$. The Wronskian of these vectors is 
+\begin{align*}
+  W(t)&=\begin{vmatrix}v_1& v_2\end{vmatrix} \\
+      &= \begin{vmatrix}e^{\sqrt{ab}t} & \frac{ae^{-\sqrt{ab}t}}{\sqrt{ab}}\\ 
+	\frac{-be^{\sqrt{ab}t}}{\sqrt{ab}} & e^{-\sqrt{ab}t} \\
+      \end{vmatrix}\\
+      & = 1 + \sqrt{ab} \neq 0\quad \forall a,b\in\R
+\end{align*}A general solution for the IVP \ref{model1} is 
+\begin{equation}
+  \phi(t) = c_1e^{\sqrt{ab}t}e_+ + c_2 e^{-\sqrt{ab}t}e_-
+\end{equation}
+\subsection{To show the solutions are hyperbolic}
+\end{document}
