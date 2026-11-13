@@ -121,6 +121,16 @@ The initial conditions become
 \[
   \begin{bmatrix}u_0\\v_0\end{bmatrix} = P^{-1}\begin{bmatrix}x_0 \\ y_0 \end{bmatrix}
 \]
+from which we can recover
+\begin{equation}\label{initial1}
+  \begin{bmatrix}
+    u_0\\v_0 
+  \end{bmatrix} 
+  =\frac{1}{2}\begin{bmatrix}
+    x_0\sqrt{\frac{a+b}{a}} +y_0\sqrt{\frac{a+b}{b}}\\
+    x_0\sqrt{\frac{a+b}{a}} -y_0\sqrt{\frac{a+b}{b}}
+  \end{bmatrix}
+\end{equation}
 Each coordinate can be solved independently yielding
 \begin{align*}
   \psi(t)=\begin{bmatrix}\psi_1(t)\\\psi_2(t)\end{bmatrix}&=\begin{bmatrix}u_0e^{\sqrt{ab}t}\\v_0e^{-\sqrt{ab}t}\end{bmatrix}\\.
@@ -220,6 +230,17 @@ It remains for us to check that $\phi(t)$ satisfies the quadratic form.
     0 & a\end{bmatrix}\begin{bmatrix}\sqrt{\frac{a}{a+b}}&\sqrt{\frac{b}{a+b}}\end{bmatrix}\\
       &= \frac{-2ab}{a+b}\\
     \xi_1^TB\xi_2&=\begin{bmatrix}\sqrt{\frac{a}{a+b}}&\sqrt{\frac{b}{a+b}}\end{bmatrix}^T\begin{bmatrix}-b & 0\\0 & a\end{bmatrix}\begin{bmatrix}\sqrt{\frac{a}{a+b}}&-\sqrt{\frac{b}{a+b}}\end{bmatrix}\\ 
-&= \frac{-2ab}{a+b}
+&= \frac{-2ab}{a+b}\\
+\implies
+    \phi(t)^TB\phi(t)&= \frac{-4u_0v_0ab}{a+b}.
+\end{align*}
+from \ref{initial1}, we can calculate
+\begin{align*}
+  \phi(t)^TB\phi(t)&= \frac{-4u_0v_0ab}{a+b} \\
+		   &= 
+		   \frac{-4ab}{a+b}\frac{1}{4}\left(x_0\sqrt{\frac{a+b}{a}} +y_0\sqrt{\frac{a+b}{b}}\right)
+		 \left(x_0\sqrt{\frac{a+b}{a}} -y_0\sqrt{\frac{a+b}{b}}\right)\\
+		   &= \frac{-ab}{a+b}\left(\frac{a+b}{a}x_0^2-\frac{a+b}{b}y_0^2\right)\\
+		   &= ay_0^2-bx_0^2
 \end{align*}
 \end{document}
