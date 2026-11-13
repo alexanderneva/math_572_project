@@ -40,14 +40,14 @@ where $a$ and $b$ represent the spending per unit time of nations $A$ and $B$ re
 \section{Solving Model 1}
 Following \cite[Chap. 7~]{boyce2013elementary} to solve \ref{model1} we look for a fundamental solution set given by the eigenvectors of the matrix 
 \begin{equation}
-  M := \begin{bmatrix}
+  A := \begin{bmatrix}
     0 & a \\
     b & 0 \\
   \end{bmatrix}.
 \end{equation}
 The characteristic polynomial of $M$ is 
 \begin{eqnarray}
-  p(\lambda) &= \lambda^2 - \text{Tr} M \lambda + \det{M}\\
+  p(\lambda) &= \lambda^2 - \text{Tr} A \lambda + \det{A}\\
 	     &= \lambda^2 - ab
 \end{eqnarray}
 Setting $p=0$ and solving for $\lambda$ yields
@@ -56,23 +56,170 @@ Setting $p=0$ and solving for $\lambda$ yields
 \end{align}
 These will be real valued when $\text{sign}(a)=\text{sign}(b)$ and a $\C$-conjugate pair otherwise. The eigenvector $e_+$ comes from
 \begin{align*}
-  \lambda_+ I - M &= 
+  M-\lambda_+ I &= 
     \begin{bmatrix}
-      \sqrt{ab} & -a \\
-      -b  & \sqrt{ab}
+      -\sqrt{ab} & a \\
+      b  & -\sqrt{ab}
     \end{bmatrix} & \\
-   &= \begin{bmatrix}\sqrt{ab}&a\\0&0\end{bmatrix} & \left(\frac{-b}{\sqrt{ab}}R_1 \to R_2\right)\\
+   &= \begin{bmatrix}-\sqrt{ab}&a\\0&0\end{bmatrix} & \left(\frac{b}{\sqrt{ab}}R_1 \to R_2\right)\\
 \end{align*}
-Hence, $v_+ = (1,-b/\sqrt{ab})$ is an eigenvector for matrix $M$. Similarly, we can find $v_- = (a/\sqrt{ab},1)$. The Wronskian of these vectors is 
+Hence, $v_1 = \left(\sqrt{\frac{a}{b}},1\right)$ is an eigenvector for matrix $M$. Similarly, we can find $v_2 = \left(1,-\sqrt{\frac{b}{a}}\right)$. We normalize $v_1$ and $v_2$ before defining our transformation matrix.
 \begin{align*}
-  W(t)&=\begin{vmatrix}v_1& v_2\end{vmatrix} \\
-      &= \begin{vmatrix}e^{\sqrt{ab}t} & \frac{ae^{-\sqrt{ab}t}}{\sqrt{ab}}\\ 
-	\frac{-be^{\sqrt{ab}t}}{\sqrt{ab}} & e^{-\sqrt{ab}t} \\
+  \xi_1:=v_1/||v_1||=\sqrt{\frac{a+b}{b}}^{-1}\left(\sqrt{\frac{a}{b}},1\right)=\left(\sqrt{\frac{a}{a+b}},\sqrt{\frac{b}{a+b}}\right)\\
+  \xi_2:=v_2/||v_2||=\sqrt{\frac{a+b}{a}}^{-1}\left(\sqrt{1,-\frac{b}{a}}\right)=\left(\sqrt{\frac{a}{a+b}},-\sqrt{\frac{b}{a+b}}\right)\\
+\end{align*}
+Let $P$ denote the transformation matrix
+\begin{equation*}
+  P:=\begin{bmatrix}x_1\\x_2\end{bmatrix}=\begin{bmatrix}\sqrt{\frac{a}{a+b}} & \sqrt{\frac{a}{a+b}}\\
+  \sqrt{\frac{b}{a+b}} & -\sqrt{\frac{b}{a+b}}
+\end{bmatrix}
+\end{equation*}
+$P$ is singular when 
+
+\begin{equation*}
+  0=\begin{vmatrix}\sqrt{\frac{a}{a+b}} & \sqrt{\frac{a}{a+b}}\\
+    \sqrt{\frac{b}{a+b}} & -\sqrt{\frac{b}{a+b}}
+  \end{vmatrix} =\frac{-2\sqrt{ab}}{a+b}
+\end{equation*}
+So long as $a\neq0$ and $b\neq 0$, $P$ is invertible. We are assuming that $a,b>0$, so the case $a+b\neq0$ does not apply. $P^{-1}$ is given by
+\[
+  \frac{a+b}{-2\sqrt{ab}}
+ \begin{bmatrix}
+    -\sqrt{\frac{b}{a+b}} & -\sqrt{\frac{a}{a+b}}\\
+    -\sqrt{\frac{b}{a+b}} & \sqrt{\frac{a}{a+b}}
+  \end{bmatrix}
+  =\frac{1}{2}\begin{bmatrix}
+    \sqrt{\frac{a+b}{a}} & \sqrt{\frac{a+b}{b}}\\
+    \sqrt{\frac{a+b}{a}} & -\sqrt{\frac{a+b}{b}}
+  \end{bmatrix}
+\]
+We can change coordinates
+\begin{equation*}
+  \begin{bmatrix}u\\v\end{bmatrix}=P^{-1}\begin{bmatrix}x\\y\end{bmatrix}.
+\end{equation*}
+For the time derivative, this also implies
+\begin{align*}
+  \begin{bmatrix}
+    u^\prime\\
+    v^\prime
+  \end{bmatrix}&=
+  P^{-1}\begin{bmatrix}
+    x^\prime\\y^\prime
+  \end{bmatrix}\\
+  &= P^{-1}AP\begin{bmatrix}
+    u\\v 
+  \end{bmatrix}\\
+  &= D\begin{bmatrix}
+    u\\v
+  \end{bmatrix}\\
+\end{align*}
+where $D$ is given by
+\begin{equation*}
+  D:= \begin{bmatrix}\sqrt{ab} & 0 \\ 0 & -\sqrt{ab}\end{bmatrix}.
+\end{equation*}
+The initial conditions become 
+\[
+  \begin{bmatrix}u_0\\v_0\end{bmatrix} = P^{-1}\begin{bmatrix}x_0 \\ y_0 \end{bmatrix}
+\]
+Each coordinate can be solved independently yielding
+\begin{align*}
+  \psi(t)=\begin{bmatrix}\psi_1(t)\\\psi_2(t)\end{bmatrix}&=\begin{bmatrix}u_0e^{\sqrt{ab}t}\\v_0e^{-\sqrt{ab}t}\end{bmatrix}\\.
+\end{align*}
+We can bring $\psi(t)$ back to the $(x,y)$ coordinates by $\phi(t):=P\psi(t)$
+\begin{align}\label{general}
+  \phi(t)=P\psi(t)&= \begin{bmatrix}
+  \sqrt{\frac{a}{a+b}} & \sqrt{\frac{a}{a+b}}\\
+\sqrt{\frac{b}{a+b}} & -\sqrt{\frac{b}{a+b}}\end{bmatrix}\begin{bmatrix}u_0e^{\sqrt{ab}t}\\v_0e^{-\sqrt{ab}t}\end{bmatrix}\\
+		     &= u_0e^{\sqrt{ab}t}\xi_1+v_0e^{-\sqrt{ab}t}\xi_2
+\end{align}
+The Wronskian of these vectors is 
+\begin{align*}
+  W(t)&=\begin{vmatrix}e^{\sqrt{ab}t}\xi_1& e^{-\sqrt{ab}t}\xi_2\end{vmatrix} \\
+      &= \begin{vmatrix}
+	e^{\sqrt{ab}t}\sqrt{\frac{a}{a+b}} & e^{-\sqrt{ab}t}\sqrt{\frac{a}{a+b}}\\
+	e^{\sqrt{ab}t}\sqrt{\frac{b}{a+b}} & -e^{-\sqrt{ab}t}\sqrt{\frac{b}{a+b}}
       \end{vmatrix}\\
-      & = 1 + \sqrt{ab} \neq 0\quad \forall a,b\in\R
+      & = \frac{-2\sqrt{ab}}{a+b}\neq 0\quad\text{If }a>0,b>0.
 \end{align*}A general solution for the IVP \ref{model1} is 
 \begin{equation}
-  \phi(t) = c_1e^{\sqrt{ab}t}e_+ + c_2 e^{-\sqrt{ab}t}e_-
+  \phi(t) = c_1e^{\sqrt{ab}t}v_1 + c_2 e^{-\sqrt{ab}t}v_2,\quad c_1,c_2 \in \R
 \end{equation}
+where $c_1,c_2$ are determined from the initial condition $x(0)=x_0$, and $y(0)=y_0$. To get back our initial conditions in terms of $(x_0,y_0)$, we apply $P$
+%\begin{align*} 
+%  P\begin{bmatrix}u_0\\v_0\end{bmatrix} &= \begin{bmatrix}x_0 \\ y_0 \end{bmatrix}\\
+%				       &= \begin{bmatrix}(x_0,y_0)\cdot\xi_1 \\
+%				       (x_0,y_0)\cdot\xi_2\end{bmatrix}
+%\end{align*}
+%Substituting for the coefficients in \ref{general}, we have
+%\begin{equation}
+%  \phi(t) = (x_0,y_0)\cdot\xi_1e^{\sqrt{ab}t}\xi_1 + (x_0,y_0)\cdot\xi_2 e^{-\sqrt{ab}t}\xi_2
+%\end{equation}
+%\begin{align*}
+%  \begin{bmatrix}
+%    x_0\\
+%    y_0
+%  \end{bmatrix}=\phi(t_0)&=
+%    \begin{bmatrix}
+%      v_1 & v_2
+%      \end{bmatrix}\begin{bmatrix}c_1\\c_2\end{bmatrix}\\
+%	  &= \begin{bmatrix}
+%	    \frac{a}{\sqrt{ab}} & 1\\
+%	    1 & \frac{-b}{\sqrt{ab}}
+%	    \end{bmatrix}\begin{bmatrix}
+%	    c_1\\c_2
+%	  \end{bmatrix}\\
+%	  \iff 
+%	  \frac{1}{1+\sqrt{ab}}\begin{bmatrix}
+%	     \frac{b}{\sqrt{ab}} & 1\\
+%	    1 & \frac{-a}{\sqrt{ab}}
+%	    \end{bmatrix}
+%      \begin{bmatrix}x_0\\y_0\end{bmatrix} &= \begin{bmatrix}c_1\\c_2\end{bmatrix}
+%\end{align*}
 \subsection{To show the solutions are hyperbolic}
+Following the procedure in \cite[Chap. 9~]{boyce2013elementary} we can view our system as 
+\begin{equation}
+  \begin{bmatrix}
+    x^\prime\\
+  y^\prime	
+  \end{bmatrix}=\begin{bmatrix}
+  F(x,y)\\
+  G(x,y)
+\end{bmatrix},\quad F(x,y)=ay,~G(x,y)=bx,~ a,b\in\R_+
+\end{equation}
+with $x(0)=x_0$ and $y(0)=y_0$. We can reduce the order of the system by division
+\begin{align*}
+  \frac{dy}{dx}&=\frac{\frac{dy}{dt}}{\frac{dx}{dt}} = \frac{G(x,y)}{F(x,y)}\\
+						    &=\frac{bx}{ay}\\
+  \iff& ay~dy = bx~dx\\
+  \iff& \frac{ay^2}{2} = \frac{bx^2}{2}+C\\
+  \iff& ay^2-bx^2 = 2C
+\end{align*}
+which is an equation of a hyperbola. Substituting in the initial condition gives 
+\begin{equation*}
+  ay^2-bx^2 = ay_0^2-bx_0^2 = \begin{bmatrix} x & y\end{bmatrix}B\begin{bmatrix} x \\ y\end{bmatrix}
+\end{equation*}
+where 
+\[
+  B :=\begin{bmatrix}-b & 0\\
+  0 & a\end{bmatrix}
+\]
+It remains for us to check that $\phi(t)$ satisfies the quadratic form.
+\begin{align*}
+  \phi(t)^TB\phi(t)&= 
+    (u_0e^{\sqrt{ab}t}\xi_1+v_0e^{-\sqrt{ab}t}\xi_2)^TB
+    (u_0e^{\sqrt{ab}t}\xi_1+v_0e^{-\sqrt{ab}t}\xi_2)\\
+		   &= u_0^2e^{2\sqrt{ab}t}\xi_1^T B\xi_1+v_0^2e^{2\sqrt{ab}t}\xi_2^TB\xi_2 + u_0v_0(\xi_1^T B \xi_2 + \xi_2^T B \xi_1)\\\\
+  \xi_1^T B\xi_1 &= \begin{bmatrix}\sqrt{\frac{a}{a+b}}&\sqrt{\frac{b}{a+b}}\end{bmatrix}^T\begin{bmatrix}-b & 0\\
+    0 & a\end{bmatrix}\begin{bmatrix}\sqrt{\frac{a}{a+b}} & \sqrt{\frac{b}{a+b}}\end{bmatrix}\\
+      &= \begin{bmatrix}\sqrt{\frac{a}{a+b}} & \sqrt{\frac{b}{a+b}}\end{bmatrix}^T\begin{bmatrix}-b\sqrt{\frac{a}{a+b}} & a\sqrt{\frac{b}{a+b}}\end{bmatrix}\\
+      &=0\\
+\xi_2^T B\xi_2 &= \begin{bmatrix}\sqrt{\frac{a}{a+b}}&-\sqrt{\frac{b}{a+b}}\end{bmatrix}^T\begin{bmatrix}-b & 0\\
+    0 & a\end{bmatrix}\begin{bmatrix}\sqrt{\frac{a}{a+b}} & -\sqrt{\frac{b}{a+b}}\end{bmatrix}\\
+      &=0\\
+    \xi_2^TB\xi_1&=\begin{bmatrix}\sqrt{\frac{a}{a+b}}&-\sqrt{\frac{b}{a+b}}\end{bmatrix}^T\begin{bmatrix}-b & 0\\
+    0 & a\end{bmatrix}\begin{bmatrix}\sqrt{\frac{a}{a+b}}&\sqrt{\frac{b}{a+b}}\end{bmatrix}\\
+      &= \frac{-2ab}{a+b}\\
+    \xi_1^TB\xi_2&=\begin{bmatrix}\sqrt{\frac{a}{a+b}}&\sqrt{\frac{b}{a+b}}\end{bmatrix}^T\begin{bmatrix}-b & 0\\0 & a\end{bmatrix}\begin{bmatrix}\sqrt{\frac{a}{a+b}}&-\sqrt{\frac{b}{a+b}}\end{bmatrix}\\ 
+&= \frac{-2ab}{a+b}
+\end{align*}
 \end{document}

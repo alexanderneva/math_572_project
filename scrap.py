@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from numpy._core.umath import arctanh
 
 def factorial(n):
 
@@ -87,12 +88,50 @@ def exponential(A,n):
         k += 1
     return sum
 
-A = np.array([[0,1],[1,0]])
-f = lambda t : exponential(A*t,3)
+a = -3.
+b = 1.
+x_0 = 1.
+y_0 = 4.
+initial = np.array([x_0,y_0])
+#A = np.abs(a*y_0**2-b*x_0**2)
+M = np.array([[0,a],[b,0]])
+#P= np.array([[np.sqrt(a/(a+b)),np.sqrt(b/(a+b))],
+#             [np.sqrt(b/(a+b)),-np.sqrt(a/(a+b))]])
+P = np.array([[np.sqrt(a/(a+b)),np.sqrt(a/(a+b))],[np.sqrt(b/(a+b)),-np.sqrt(b/(a+b))]])
+print("v_1 norm ", np.linalg.norm(P[:,0]))
+print("v_2 norm ", np.linalg.norm(P[:,1]))
+c = np.linalg.inv(P)@np.array([x_0,y_0])
+B = np.array([[-b,0],[0,a]])
+print("Transformed form", P@B@np.linalg.inv(P))
+print("Sqrt ab ",-np.sqrt(a*b), "a - b", a-b)
+print(P@P)
+print(P@M)
+print("P@M@P", np.linalg.inv(P)@M@P)
+sol = lambda t : (c[0]*P[:,0] + c[1]*P[:,1])*np.cosh(np.sqrt(a*b)*t)[...,np.newaxis] + (c[0]*P[:,0] - c[1]*P[:,1])*np.sinh(np.sqrt(a*b)*t)[...,np.newaxis]
 
+sol_2 = lambda t : c[0]*P[:,0]*np.exp(np.sqrt(a*b)*t)[...,np.newaxis] + c[1]*P[:,1]*np.exp(-np.sqrt(a*b)*t)[...,np.newaxis]
+
+sol_3 = lambda t : (initial@P[:,0])*P[:,0]*np.exp(np.sqrt(a*b)*t)[...,np.newaxis]+(initial@P[:,1])*P[:,1]*np.exp(-np.sqrt(a*b)*t)[...,np.newaxis]
+#phi = np.arctanh(np.sqrt(a/b)*(x_0/y_0))
+#sol_1 = lambda t : np.sqrt(A/b)*np.sinh(np.sqrt(a*b)*t+phi)
+#sol_2 = lambda t : np.sqrt(A/a)*np.cosh(np.sqrt(a*b)*t+phi)
 t = np.linspace(0,1)
-plt.plot(f(t))
+U,V = P[:,0],P[:,1]
+fig, ax = plt.subplots(2)
+ax[0].plot(sol(t)[:,0],sol(t)[:,1],label='sol_1')
+ax[0].plot(sol_2(t)[:,0],sol_2(t)[:,1],label='sol_2')
+ax[0].plot(sol_3(t)[:,0],sol_3(t)[:,1],label='sol_3')
+ax[0].legend()
+ax[1].plot(t,sol(t)[:,0],label='nation 1')
+ax[1].plot(t,sol(t)[:,1],label='nation 2')
+ax[1].legend()
 plt.show()
+
+Q = np.array([[0,a],[-b,0]])
+M = np.array([[0,a],[b,0]])
+v_1 = np.array([a/np.sqrt(a*b),1])
+v_2 = np.array([1,-b/np.sqrt(a*b)])
+#print(v_2.T@Q@v_2- v_1.T@Q@v_1,np.sqrt(a*b)*v_2)
 
 
 
