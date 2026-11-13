@@ -1,4 +1,5 @@
 __pycache__/
+octave-workspace
 *.aux
 *.log
 *.out
