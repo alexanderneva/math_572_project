@@ -244,5 +244,38 @@ from \ref{initial1}, we can calculate
 		   &= ay_0^2-bx_0^2
 \end{align*}
 \subsection{Plotting}
-Test
+The phase portrait for the mutual fear model is depicted in \autoref{phase1}. We have stability lines for the hyperbola determined by the eigenvectors of respective slope
+\begin{align*}
+  \frac{\xi_{1_y}}{\xi_{1_x}}&=\frac{\sqrt{\frac{b}{a+b}}}{\sqrt{\frac{a}{a+b}}}=\sqrt{\frac{b}{a}}\\
+  \frac{\xi_{2_y}}{\xi_{2_x}}&=\frac{-\sqrt{\frac{b}{a+b}}}{\sqrt{\frac{a}{a+b}}}=-\sqrt{\frac{b}{a}}\\.
+\end{align*}
+For the $x$-nullcline and $y$-nullcline, we solve
+\[
+  \begin{bmatrix}0\\y^\prime\end{bmatrix}=
+  \begin{bmatrix}
+    0 & a \\
+    b & 0 
+    \end{bmatrix}
+    \begin{bmatrix}
+      x \\ 
+      y
+    \end{bmatrix},
+    \quad
+  \begin{bmatrix}x^\prime\\0\end{bmatrix}=
+  \begin{bmatrix}
+    0 & a \\
+    b & 0 
+    \end{bmatrix}
+    \begin{bmatrix}
+      x \\ 
+      y
+    \end{bmatrix}
+\]
+respectively. In the first case, $a>0$ implies $y=0$ for points on the $x$-nullcline. 
+\begin{figure}[ht]
+  \includegraphics[width=\textwidth]{../figures/model_1_curves.png}
+  \caption{Phase Portrait for Mutual Fear model}
+  \label{phase1}
+\end{figure}
+\subsection{Solving Model 2}
 \end{document}
