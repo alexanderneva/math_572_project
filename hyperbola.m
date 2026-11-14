@@ -21,8 +21,7 @@ v_0 = U(2);
 t = linspace(-2,2,200);
 sol = @(t,u) u(1)*xi_1 .* exp(omega*t) + u(2)*xi_2 .* exp(-omega*t);
 fig = figure();
-subplot(2,1,1);
-hold on;
+subplot(2,1,1);hold on;
 for k = 1:size(U,2)
   x = sol(t,U(:,k))(1,:);
   y = sol(t,U(:,k))(2,:);
@@ -30,9 +29,14 @@ for k = 1:size(U,2)
 endfor
 plot(t,sqrt(b/a)*t,'DisplayName',sprintf('Line of slope sqrt(b/a)%.2f',sqrt(b/a)),'LineWidth',1);
 plot(t,-sqrt(b/a)*t,'LineWidth',1)
+vecs = linspace(-3,3,20);
+[X,Y] = meshgrid(vecs);
+U = A(1,1)*X + A(1,2)*Y;
+V = A(2,1)*X + A(2,2)*Y;
+quiver(X,Y,U,V);
 hold off;
 xlim([-2,2]); ylim([-2,2]);
-%legend('show');
+%%legend('show');
 title(sprintf("Relational spending, a=%g, b=%g",a,b));
 xlabel("Nation A");
 ylabel("Nation B");
@@ -45,8 +49,16 @@ plot(t,x,'DisplayName','Nation A');
 plot(t,y,'DisplayName','Nation B');
 xlabel('Time');
 ylabel('Spending');
-legend('show');
+%legend('show');
 grid on;
-%%waitfor(gcf);
+%waitfor(gcf);
 hold off;
 print('figures/model_1_curves.png', '-dpng', '-S800,600');
+
+
+%vecs = linspace(-3,3,20);
+%[X,Y] = meshgrid(vecs);
+%U = A(1,1)*X + A(1,2)*Y;
+%V = A(2,1)*X + A(2,2)*Y;
+%quiver(X,Y,U,V);
+%grid on;
