@@ -25,7 +25,7 @@ The initial value problem for model 1 is given by
     \begin{bmatrix}
       x \\ 
       y
-  \end{bmatrix},\quad x(0)=x_0,~y(0)=y_0
+  \end{bmatrix},\quad x(0)=x_0,~y(0)=y_0,\quad a,b>0
 \end{equation}
 where $a$ and $b$ represent the spending per unit time of nations $A$ and $B$ respectively.
 \subsection{Richardson}
@@ -36,13 +36,13 @@ The initial value problem for the Richardson model is given by
     y^{\prime}
   \end{bmatrix} = 
   \begin{bmatrix}
-    0 & a \\
-    b & 0 
+    -m & a \\
+    b & -n 
     \end{bmatrix}
     \begin{bmatrix}
       x \\ 
       y
-  \end{bmatrix},\quad x(0)=x_0,~y(0)=y_0
+  \end{bmatrix},\quad x(0)=x_0,~y(0)=y_0,\quad a,b,m,n>0
 \end{equation}
 where $a$ and $b$ represent the spending per unit time of nations $A$ and $B$ respectively
 
@@ -252,7 +252,7 @@ It remains for us to check that $\phi(t)$ satisfies the quadratic form.
 \implies
     \phi(t)^TB\phi(t)&= \frac{-4u_0v_0ab}{a+b}.
 \end{align*}
-from \ref{initial1}, we can calculate
+from \autoref{initial1}, we can calculate
 \begin{align*}
   \phi(t)^TB\phi(t)&= \frac{-4u_0v_0ab}{a+b} \\
 		   &= 
@@ -296,8 +296,35 @@ respectively. In the first case, $a>0$ implies $y=0$ for points on the $x$-nullc
   \label{phase1}
 \end{figure}
 Source code for the numerical verification can be found \href{https://github.com/alexanderneva/math_572_project/blob/main/hyperbola.m}{here}.
-\subsection{Solving Model 2}
-
+\section{Solving the Richardson Model}
+\subsection{Equilibrium, Nullclines and Stability}
+From the Richardson model, \autoref{richardson}, we have the matrix
+\begin{equation*}
+  R:=\begin{bmatrix}
+    -m & a\\
+    b & -n\\
+  \end{bmatrix}
+\end{equation*}
+we look for solutions of satisfying
+\begin{align*}
+  \begin{bmatrix}0 \\ 0\end{bmatrix}&=\begin{bmatrix}
+    -m & a\\
+    b & -n\\
+    \end{bmatrix}\begin{bmatrix}x\\y\end{bmatrix}
+    \implies   & \begin{bmatrix}-mx+ay\\ bx -ny \end{bmatrix}&=\begin{bmatrix}0\\0\end{bmatrix}\\
+    \implies & y=\frac{b}{n}x\\
+    \implies &(-nm+ab)x=-(\det{R})x=0.
+\end{align*}
+If we assume $R$ is invertible, which will be the case so long as we still let $a,b>0$ irrespective of $m$ and $n$, this implies $x=0$ and $y=0$. So we have the equilibrium point 
+\[
+(x^\star,y^\star)=(0,0).
+\]
+We employ the Routh Hurwitz criteria from \cite[Chapter 3.]{MoghadasJaberiDouraki2019} which says that \autoref{richardson} is a stable system iff $\text{Tr }J<0$ and $\det{J}>0$. We have
+\begin{align*}
+  \text{Tr }J = -(m+n)<0\quad\forall m,n>0\\
+  \det{J} = mn-ab > 0\iff mn > ab
+\end{align*}
+\subsection{Plotting}
 \begin{figure}[ht]
   \includegraphics[width=\textwidth]{../figures/richardson_curves.png}
   \caption{Phase Portrait for Richardson model}

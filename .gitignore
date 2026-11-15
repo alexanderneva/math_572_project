@@ -14,3 +14,6 @@ octave-workspace
 *.fot
 *.cb
 *.cb2
+*.bbl
+*.blg
+
