@@ -32,28 +32,31 @@ for k = 1:size(U,2)
 endfor
 l1 = plot(t,sqrt(b/a)*t,'DisplayName',sprintf('Eigenline sqrt(b/a)=%.2f',sqrt(b/a)),'LineWidth',1);
 l2 = plot(t,-sqrt(b/a)*t,'DisplayName',sprintf('Eigenline -sqrt(b/a)=%.2f',-sqrt(b/a)),'LineWidth',1);
+x_n = plot(t,zeros(size(t)),'k');
+y_n = plot(zeros(size(t)),t,'k');
 vecs = linspace(-3,3,25);
 [X,Y] = meshgrid(vecs);
 U_ = A(1,1)*X + A(1,2)*Y;
 V = A(2,1)*X + A(2,2)*Y;
-L_U = sqrt(sum(U_.^2,1));
-L_U(L_U==0)=1;
-L_V = sqrt(sum(V.^2,1));
-U_ = U_./L_U;
-V = V./L_V;
+L = hypot(U_,V);
+U_ = U_./L;
+V = V ./L;
 quiver(X,Y,U_,V);
 NX_U = A(1,1)*X;
 NX_V = A(2,1)*X;
-NX_U = normalize_cols(NX_U);
-NX_V = normalize_cols(NX_V);
+%NX_U = normalize_cols(NX_U);
+%NX_V = normalize_cols(NX_V);
 Y_N = zeros(size(Y));
-NX = quiver(X,Y_N,NX_U,NX_V,'DisplayName','x-nullcline');
+L_X = hypot(NX_U,NX_V);
+NX_U = NX_U./L_X
+NX_V = NX_V./L_X
+NX = quiver(X,Y_N,NX_U,NX_V,'DisplayName','x-nullcline','LineWidth',1.);
 NY_U = A(1,2)*Y;
 NY_V = A(2,2)*Y;
-NY_U = normalize_cols(NY_U);
-NY_V = normalize_cols(NY_V);
+%NY_U = normalize_cols(NY_U);
+%NY_V = normalize_cols(NY_V);
 X_N = zeros(size(X));
-NY = quiver(X_N,Y,NY_U,NY_V,'DisplayName','y-nullcline');
+NY = quiver(X_N,Y,NY_U,NY_V,'DisplayName','y-nullcline','LineWidth',1.);
 hold off;
 xlim([-2,2]); ylim([-2,2]);
 legend([l1,l2,NX,NY]);
@@ -61,9 +64,9 @@ title(sprintf("Relational spending, a=%g, b=%g",a,b));
 xlabel("Nation A");
 ylabel("Nation B");
 grid on;
+axis on;
 sample = randperm(size(U,2),7);
 samples = U(:,sample);
-disp(size(samples));
 subplot(2,1,2);
 hold on;
 for k=1:size(samples,2)

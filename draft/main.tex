@@ -27,7 +27,25 @@ The initial value problem for model 1 is given by
       y
   \end{bmatrix},\quad x(0)=x_0,~y(0)=y_0
 \end{equation}
+where $a$ and $b$ represent the spending per unit time of nations $A$ and $B$ respectively.
+\subsection{Richardson}
+The initial value problem for the Richardson model is given by
+\begin{equation}\label{richardson}
+  \begin{bmatrix}
+    x^{\prime}\\
+    y^{\prime}
+  \end{bmatrix} = 
+  \begin{bmatrix}
+    0 & a \\
+    b & 0 
+    \end{bmatrix}
+    \begin{bmatrix}
+      x \\ 
+      y
+  \end{bmatrix},\quad x(0)=x_0,~y(0)=y_0
+\end{equation}
 where $a$ and $b$ represent the spending per unit time of nations $A$ and $B$ respectively
+
 \section{Solution to the Problem}
 \section{Interpretation of the Results}
 \section{Discusssion}
@@ -249,7 +267,7 @@ The phase portrait for the mutual fear model is depicted in \autoref{phase1}. We
   \frac{\xi_{1_y}}{\xi_{1_x}}&=\frac{\sqrt{\frac{b}{a+b}}}{\sqrt{\frac{a}{a+b}}}=\sqrt{\frac{b}{a}}\\
   \frac{\xi_{2_y}}{\xi_{2_x}}&=\frac{-\sqrt{\frac{b}{a+b}}}{\sqrt{\frac{a}{a+b}}}=-\sqrt{\frac{b}{a}}\\.
 \end{align*}
-For the $x$-nullcline and $y$-nullcline, we solve
+For the $x$-nullcline and $y$-nullcline, we examine
 \[
   \begin{bmatrix}0\\y^\prime\end{bmatrix}=
   \begin{bmatrix}
@@ -271,11 +289,19 @@ For the $x$-nullcline and $y$-nullcline, we solve
       y
     \end{bmatrix}
 \]
-respectively. In the first case, $a>0$ implies $y=0$ for points on the $x$-nullcline. 
+respectively. In the first case, $a>0$ implies $y=0$ for points on the $x$-nullcline. Similarly, $b>0$ implies $x_0$ for the $y$-nullcline.
 \begin{figure}[ht]
   \includegraphics[width=\textwidth]{../figures/model_1_curves.png}
   \caption{Phase Portrait for Mutual Fear model}
   \label{phase1}
 \end{figure}
+Source code for the numerical verification can be found \href{https://github.com/alexanderneva/math_572_project/blob/main/hyperbola.m}{here}.
 \subsection{Solving Model 2}
+
+\begin{figure}[ht]
+  \includegraphics[width=\textwidth]{../figures/richardson_curves.png}
+  \caption{Phase Portrait for Richardson model}
+  \label{phase2}
+\end{figure}
+
 \end{document}
