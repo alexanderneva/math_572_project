@@ -42,9 +42,12 @@ The initial value problem for the Richardson model is given by
     \begin{bmatrix}
       x \\ 
       y
-  \end{bmatrix},\quad x(0)=x_0,~y(0)=y_0,\quad a,b,m,n>0
+  \end{bmatrix}+q,\quad x(0)=x_0,~y(0)=y_0,\quad a,b,m,n>0
 \end{equation}
-where $a$ and $b$ represent the spending per unit time of nations $A$ and $B$ respectively
+where 
+\[
+  q:=\begin{bmatrix}r\\ s\end{bmatrix},r,s\in\R.
+\]
 
 \section{Solution to the Problem}
 \section{Interpretation of the Results}
@@ -305,21 +308,37 @@ From the Richardson model, \autoref{richardson}, we have the matrix
     b & -n\\
   \end{bmatrix}
 \end{equation*}
-we look for solutions of satisfying
-\begin{align*}
+If $\det{R}\neq0,$ we have 
+\[
+  R^{-1}=\frac{1}{ab-mb}\begin{bmatrix}n & a\\ b & m\end{bmatrix}
+\]We look for solution $(x^\star,y^\star)$ satisfying
+\begin{align}\label{qstar}
   \begin{bmatrix}0 \\ 0\end{bmatrix}&=\begin{bmatrix}
     -m & a\\
     b & -n\\
-    \end{bmatrix}\begin{bmatrix}x\\y\end{bmatrix}
-    \implies   & \begin{bmatrix}-mx+ay\\ bx -ny \end{bmatrix}&=\begin{bmatrix}0\\0\end{bmatrix}\\
-    \implies & y=\frac{b}{n}x\\
-    \implies &(-nm+ab)x=-(\det{R})x=0.
+    \end{bmatrix}\begin{bmatrix}x^\star\\y^\star\end{bmatrix}+\begin{bmatrix}r\\s\end{bmatrix} \\
+    \iff \begin{bmatrix}x^\star \\ y^\star\end{bmatrix}&= -R^{-1}\begin{bmatrix}r\\s\end{bmatrix}\\
+					   &=\frac{1}{mn-ab}\begin{bmatrix}nr+as \\ br+ms\end{bmatrix}
+\end{align}
+If we assume $R$ is invertible, which will be the case so long as we still let $a,b>0$ and $mn\neq ab$. So we have the equilibrium point
+\begin{equation*}
+  \left(x^\star,y^\star\right)=\left(\frac{nr+as}{mn-ab},\frac{br+ms}{mn-ab}\right)
+\end{equation*}
+Consider the coordinate change
+\begin{equation*}
+  \begin{bmatrix}x \\ y\end{bmatrix}= \begin{bmatrix}u+x^\star \\ v + y^\star\end{bmatrix}
+\end{equation*}
+In the new coordinates, we have
+\begin{align*}
+  \begin{bmatrix}u^\prime\\v^\prime\end{bmatrix}=\begin{bmatrix}x^\prime\\y^\prime\end{bmatrix}&=R\begin{bmatrix}x\\y\end{bmatrix}+\begin{bmatrix}r\\s\end{bmatrix}\\&=R\begin{bmatrix}u+x^\star \\ v + y^\star\end{bmatrix}+\begin{bmatrix}r\\s\end{bmatrix}\\
+											       &=R\begin{bmatrix}u\\ v\end{bmatrix}-RR^{-1}\begin{bmatrix}r\\s\end{bmatrix}+\begin{bmatrix}r\\s\end{bmatrix}&\text{\autoref{qstar}}\\
+											       &=R\begin{bmatrix}u\\v\end{bmatrix}
 \end{align*}
-If we assume $R$ is invertible, which will be the case so long as we still let $a,b>0$ irrespective of $m$ and $n$, this implies $x=0$ and $y=0$. So we have the equilibrium point 
-\[
-(x^\star,y^\star)=(0,0).
-\]
-We employ the Routh Hurwitz criteria from \cite[Chapter 3.]{MoghadasJaberiDouraki2019} which says that \autoref{richardson} is a stable system iff $\text{Tr }J<0$ and $\det{J}>0$. We have
+Thus, we can look at the transformed system in $(u,v)$ coordinates
+\begin{equation}\label{uvrichardson}
+\begin{bmatrix}u^\prime\\v^\prime\end{bmatrix}=R\begin{bmatrix}u\\v\end{bmatrix},\quad u_0=x_0-x^\star,v_0=y_0-y^\star
+\end{equation}
+We can solve it as we did the mutual fear model \autoref{model1}. We employ the Routh Hurwitz criteria from \\ \cite[Chapter 3.]{MoghadasJaberiDouraki2019} which says that \autoref{richardson} is a stable system iff $\text{Tr }R<0$ and $\det{R}>0$. We have
 \begin{align*}
   \text{Tr }J = -(m+n)<0\quad\forall m,n>0\\
   \det{J} = mn-ab > 0\iff mn > ab
