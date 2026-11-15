@@ -29,7 +29,7 @@ quiver(X,Y,U,V);
 for k=1:size(ini,1)
   y_0 = ini(k,:)';
   [~,yf] = ode45(@(t,v) sys(A,q,v), [0,1], y_0);
-  [~,yb] = ode45(@(t,v) sys(A,q,v), [-1,0], y_0);
+  [~,yb] = ode45(@(t,v) sys(A,q,v), [0,-1], y_0);
   plot(yf(:,1),yf(:,2));
   plot(yb(:,1),yb(:,2));
 endfor
@@ -77,7 +77,7 @@ quiver(X,Y,U,V);
 for k=1:size(ini,1)
   y_0 = ini(k,:)';
   [~,yf] = ode45(@(t,v) sys(A,q,v), [0,1], y_0);
-  [~,yb] = ode45(@(t,v) sys(A,q,v), [-1,0], y_0);
+  [~,yb] = ode45(@(t,v) sys(A,q,v), [0,-1], y_0);
   plot(yf(:,1),yf(:,2));
   plot(yb(:,1),yb(:,2));
 endfor
