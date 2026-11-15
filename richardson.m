@@ -11,9 +11,10 @@ sys = @(A,q,v) A*v+q
 [vecs, lambda] = eig(A);
 point = linspace(0,2*pi,32)
 point(end)=[];
-ini = [cos(point(:))-x_star(1),sin(point(:))-x_star(1)];
-%[t,y] = ode45(@(t,v) sys(A), [-1,1], ini);
+ini = [cos(point(:))-x_star(1),sin(point(:))-x_star(2)];
 [X,Y] = meshgrid(linspace(-1,1,25));
+%X = X-x_star(1);
+%Y = Y-x_star(2);
 U = A(1,1)*X + A(1,2)*Y+q(1);
 V = A(2,1)*X + A(2,2)*Y+q(2);
 L = hypot(U,V);
@@ -32,6 +33,13 @@ for k=1:size(ini,1)
 endfor
 plot(t+x_star(1),(vecs(2,1)/vecs(1,1))*t+x_star(2),'LineWidth',1.,'k');
 plot(t+x_star(1),(vecs(2,2)/vecs(1,2)) *t+x_star(2),'LineWidth',1.,'k');
+NX_U = A(1,1)*X+q(1);
+NX_V = A(2,1)*X+q(2);
+Y_N = zeros(size(Y));
+L_X = hypot(NX_U,NX_V);
+NX_U = NX_U./L_X
+NX_V = NX_V./L_X
+NX = quiver(X,Y_N,NX_U,NX_V,'DisplayName','x-nullcline','LineWidth',1.);
 hold off;
 title(sprintf("Relational spending, m=%g n=%g a=%g, b=%g \n r=%g s=%g Det(A) = %g ",m,n,a,b,r,s,det(A)));
 xlabel("Nation A");
@@ -44,8 +52,8 @@ b = 5;
 m = 3;
 n = 3;
 A = [-m, a; b, -n];
-X = X - x_star(1);
-Y = Y - x_star(2);
+%X = X - x_star(1);
+%Y = Y - x_star(2);
 U = A(1,1)*X + A(1,2)*Y+q(1);
 V = A(2,1)*X + A(2,2)*Y+q(2);
 L = hypot(U,V);
