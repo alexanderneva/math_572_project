@@ -102,5 +102,4 @@ function plot_phase(a,b,m,n,r,s)
   legend([eq,NX,NY]);
   print(fig,sprintf('figures/richardson_curves_%g_%g.png',r,s),
   '-dpng', '-S1300,1300');
-  close(fig);
 endfunction
