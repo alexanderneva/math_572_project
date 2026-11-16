@@ -1,0 +1,111 @@
+\documentclass{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{seagull}
+\input{preamble.tex}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{subfig}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{mwe}
+\definecolor{matlabblue}{RGB}{0, 91, 150}
+\definecolor{matlabgray}{RGB}{240, 240, 240}
+
+\lstdefinestyle{matlab}{
+    language=octave,
+    backgroundcolor=\color{matlabblue},
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{matlabgrey}\bfseries,
+    commentstyle=\itshape\color{gray},
+    showstringspaces=false,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    tabsize=2
+}
+
+\setbeamertemplate{frame footer}{}
+\AtBeginSection[]{
+  \begin{frame}[c, noframenumbering]
+    \sectionpage
+  \end{frame}
+}
+%\usepackage{bibtex} % biblatex
+%\addbibresource{references.bib} % reference file
+% \usepackage{unicode-math}
+% \setmainfont{sTIX Two Text}
+% \setmathfont{sTIX Two Math}
+
+\title{Mutual Fear Model}
+\subtitle{MATH 572}
+\author{Alexander Shulhan}
+\begin{document}
+\maketitle
+\section{Hyperbola}
+\begin{frame}
+
+\begin{block}{Mutual Fear}
+The initial value problem for model 1 is given by
+\begin{equation}\label{model1}
+  \begin{bmatrix}
+    x^{\prime}\\
+    y^{\prime}
+  \end{bmatrix} = 
+  \begin{bmatrix}
+    0 & a \\
+    b & 0 
+    \end{bmatrix}
+    \begin{bmatrix}
+      x \\ 
+      y
+  \end{bmatrix},\quad x(0)=x_0,~y(0)=y_0,\quad a,b>0
+\end{equation}
+where $a$ and $b$ represent the spending per unit time of nations $A$ and $B$ respectively.
+\end{block}
+\end{frame}
+\section{Richardson}
+\begin{frame}
+
+\begin{block}{Richardson}
+The initial value problem for the Richardson model is given by
+\begin{equation}\label{richardson}
+  \begin{bmatrix}
+    x^{\prime}\\
+    y^{\prime}
+  \end{bmatrix} = 
+  \begin{bmatrix}
+    -m & a \\
+    b & -n 
+    \end{bmatrix}
+    \begin{bmatrix}
+      x \\ 
+      y
+  \end{bmatrix}+q,\quad x(0)=x_0,~y(0)=y_0,\quad a,b,m,n>0
+\end{equation}
+where 
+\begin{equation*}
+  q:=\begin{bmatrix}r\\ s\end{bmatrix},r,s\in\R.
+\end{equation*}
+\end{block}
+\end{frame}
+\section{3 Nations}
+\begin{frame}
+  \begin{block}{3 Nation Model}
+  \begin{equation}
+    \begin{bmatrix}
+      x^\prime \\ y^\prime \\ z^\prime
+    \end{bmatrix}
+    = \begin{bmatrix}
+      -m & a & c_2 \\
+      b & -n & d_2 \\
+      c_1 & d_1 & -p
+      \end{bmatrix}
+      \begin{bmatrix}
+	x \\ y \\ z
+	\end{bmatrix}+\begin{bmatrix}r\\s\\q\end{bmatrix}
+  \end{equation}
+\end{block}
+\end{frame}
+\end{document}
