@@ -2,8 +2,8 @@ a = 3;
 b = 3;
 m = 5;
 n = 5;
-r=-.5;
-s=-0.5;
+r=1;
+s=1;
 A = [-m, a; b, -n];
 q = [r;s];
 x_star = -inv(A)*q;
@@ -49,14 +49,16 @@ L = hypot(NY_U,NY_V);
 L(L==0)=1;
 NY = quiver(t,Y_N,0.1*(NY_U./L),0.1*(NY_V./L),0,'m','LineWidth',1.);
 NY=plot(t,Y_N,'g','DisplayName','y-nullcline','LineWidth',1.);
-eq = plot(x_star(1),x_star(2),'o','LineWidth',1.5,'DisplayName','Equilibrium');
+eq=plot(x_star(1),x_star(2),'o','MarkerSize',5,
+'MarkerFaceColor','r','DisplayName',
+sprintf('Equilibrium (%g, %g)',x_star(1),x_star(2)));
 hold off;
 title(sprintf("Relational spending, m=%g n=%g a=%g, b=%g \n r=%g s=%g Det(A) = %g ",m,n,a,b,r,s,det(A)));
 xlabel("Nation A");
 ylabel("Nation B");
 xlim([-1,1]);
 ylim([-1,1]);
-legend([eq,NX,NY]);
+legend([eq,NX,NY],'Location','northwest');
 subplot(2,1,2);
 [X,Y] = meshgrid(linspace(-1,1,25));
 a = 5;
@@ -64,6 +66,10 @@ b = 5;
 m = 3;
 n = 3;
 A = [-m, a; b, -n];
+q = [r;s];
+x_star = -inv(A)*q;
+sys = @(A,q,v) A*v+q;
+[vecs, lambda] = eig(A);
 %X = X - x_star(1);
 %Y = Y - x_star(2);
 U = A(1,1)*X + A(1,2)*Y+q(1);
@@ -97,14 +103,15 @@ L = hypot(NY_U,NY_V);
 L(L==0)=1;
 NY = quiver(t,Y_N,0.1*(NY_U./L),0.1*(NY_V./L),0,'m','LineWidth',1.);
 NY=plot(t,Y_N,'g','DisplayName','y-nullcline','LineWidth',1.);
-eq = plot(x_star(1),x_star(2),'o','LineWidth',1.5,'DisplayName','Equilibrium');
-hold off;
+eq=plot(x_star(1),x_star(2),'o','MarkerSize',5,
+'MarkerFaceColor','r','DisplayName',
+sprintf('Equilibrium (%g, %g)',x_star(1),x_star(2)));
 title(sprintf("Relational spending, m=%g n=%g a=%g, b=%g \n r=%g, s=%g, Det(A) = %g ",m,n,a,b,r,s,det(A)));
 xlabel("Nation A");
 ylabel("Nation B");
 xlim([-1,1]);
 ylim([-1,1]);
-legend([eq,NX,NY]);
+legend([eq,NX,NY],'Location','northwest');
 print('figures/richardson_curves.png', '-dpng', '-S1300,1300');
 
 
