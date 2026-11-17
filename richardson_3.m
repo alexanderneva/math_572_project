@@ -1,14 +1,14 @@
 m = 10; n=1; p=10;
 a = 1; b = 1; c_1 =0.5; c_2=1; d_1=2;d_2=3;
 A = [-m,b,c_1;a,-n,d_1; c_2,d_2,-p];
-r=1;
-s=-2;
-q=1;
+r=0;
+s=0;
+q=0;
 w = [r;s;q];
 x_star = -inv(A)*w;
 theta = linspace(-pi/2,pi/2,8);
 theta(end)=[];
-phi = linspace(0,pi/2,8);
+phi = linspace(0,2*pi,8);
 phi(end)=[];
 [THETA,PHI] = meshgrid(theta,phi);
 [x,y,z] = sph2cart(PHI,THETA,1);
@@ -59,7 +59,7 @@ axis equal; grid on;
 xlim([-2,2]+x_star(1));
 ylim([-2,2]+x_star(2));
 zlim([-2,2]+x_star(3));
-legend([L1,eq]);
+legend([eq,L1]);
 hold off;
 print(fig,sprintf('figures/richardson_3D_%g_%g_%g.png',r,s,q),
 '-dpng', '-S1300,1300');

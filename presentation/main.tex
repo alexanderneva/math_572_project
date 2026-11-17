@@ -44,7 +44,7 @@
 \author{Alexander Shulhan}
 \begin{document}
 \maketitle
-\section[allowframebreaks]{Background}
+\section[allowframebreaks]{Background and Tools}
 \begin{frame}
   \begin{columns}[c]
     \begin{column}{0.4\textwidth}
@@ -57,7 +57,7 @@
 \begin{column}{0.5\textwidth}
   \begin{block}{Arms Race Dynamics}
   \begin{itemize}
-    \item  Lewis Fry Richardson wrote a book on war and peace published posthumously \footfullcite{richardson1960arms}
+    \item  Lewis Fry Richardson wrote a book on modelling war and peace, published posthumously \footfullcite{richardson1960arms}
     \item Nation's will react to one another's spending in an arms race.
     \item Their resources are limited do to internal ecnomic constraints
   \end{itemize}
@@ -72,7 +72,17 @@
     \item Can we use a phase angle $\phi$ to encapsulate system behaviour? (Ran out of time)
 \end{itemize}
 \end{frame}
-
+\begin{frame}{Numerical Tools Used}
+  \begin{itemize}
+    \item \textbf{\href{https://octave.org/}{GNU Octave}:} free MATLAB, mostly cross compatible 
+      \begin{itemize}
+	\item \texttt{ode45}: numerically solve the system
+	\item \texttt{quiver,quiver3}: plot vector fields 
+	\item \texttt{eig}: find the eigenvalues and eigenvectors for more general case. The undamped case was solved by hand analytically.
+      \end{itemize}
+    \item \textbf{\href{https://gemini.google.com/app}{Gemini Thinking}:} questions about Richardson's book in absence of having a copy, help translating python to GNU Octave, GNU Octave questions like how to format plots and make labels, etc.
+  \end{itemize}
+\end{frame}
 \section{Undamped Case}
 \begin{frame}[allowframebreaks]{Undamped Analysis}
 \begin{block}{Mutual Fear}
@@ -104,7 +114,7 @@ $\text{sign}(\lambda_1)\neq\text{sign}(\lambda_2)$ implies $p^\star$ is a saddle
 \end{block}
 \begin{block}{Analytical Solution}
 \begin{equation}
-  \phi(t) = c_1e^{\sqrt{ab}t}v_1 + c_2 e^{-\sqrt{ab}t}v_2,\quad c_1,c_2 \in \R
+  \psi(t) = c_1e^{\sqrt{ab}t}v_1 + c_2 e^{-\sqrt{ab}t}v_2,\quad c_1,c_2 \in \R
 \end{equation}
 \end{block}
 \begin{figure}
@@ -114,7 +124,6 @@ $\text{sign}(\lambda_1)\neq\text{sign}(\lambda_2)$ implies $p^\star$ is a saddle
 \end{figure}
 \end{frame}
 \section{2 Nations}
-\subsection{Experiments}
 \begin{frame}[allowframebreaks]{Damped Case}
 \begin{block}{Richardson}
 The initial value problem for the Richardson model is given by
@@ -130,15 +139,56 @@ The initial value problem for the Richardson model is given by
     \begin{bmatrix}
       x \\ 
       y
-  \end{bmatrix}+q,\quad x(0)=x_0,~y(0)=y_0,\quad a,b,m,n>0
+      \end{bmatrix}+\begin{bmatrix}r \\ s\end{bmatrix},~x(0)=x_0,~y(0)=y_0,~a,b,m,n>0,r,s\in\R
 \end{equation}
-where 
-\begin{equation*}
-  q:=\begin{bmatrix}r\\ s\end{bmatrix},r,s\in\R.
-\end{equation*}
+\end{block}
+\begin{block}{Interpretation}
+  \begin{itemize}
+    \item \textbf{Economic dampening:} $m,n$ provide economic dampening in proportion to a nations own spending. These terms provide stability to the system since 
+      \begin{equation}\label{eq:tr}\text{Tr }A = -m-n <0\end{equation}
+    \item \textbf{Drift Term:} $r$ and $s$ determine how far the equilibrium $p^\star$ will be from $(0,0)$.
+  \end{itemize}
+\end{block}
+\begin{block}{Routh-Hurwitz}
+  Let \[A:=
+  \begin{bmatrix}
+    -m & a \\
+    b & -n 
+  \end{bmatrix}\]
+  Since the $\text{Tr }A<0$ (\autoref{eq:tr}), the character of our solutions can be seen from the determinant of our matrix $A$.\footcite[Chapter 3.]{MoghadasJaberiDouraki2019}
 \end{block}
 \end{frame}
-\begin{frame}[allowframebreaks]{Animosity: $r,s>0$}
+\begin{frame}[allowframebreaks]{Equilibrium}
+  Let $A$ denote the matrix from \autoref{eq:richardson}. Assuming that $\det{A}\neq0$. We can find the equilibrium $p^\star=\left(x^\star,y^\star\right)$. By solving 
+  \begin{block}{Finding the Equilibrium}
+    \begin{align*}
+      0&=Ap^\star+w\\
+      \implies p^\star&=A^{-1}w.
+    \end{align*}
+  \end{block}
+  We can shift coordinates to center our system at the equilibrium by making the transformation
+  \begin{block}{Coordinate Shift}
+    \begin{equation}
+      \tilde{v}=v+p^\star
+    \end{equation}
+  \end{block}
+  We take the time derivative in the new coordinates
+  \begin{block}{Substitution}
+    \begin{align*}
+      \tilde{v}^{\prime}=v^\prime
+			&= Av+w\\
+			&= A(\tilde{v}-p^\star)+w\\
+			&= A\tilde{v}-AA^{-1}w+w\\
+			&= A\tilde{v}
+    \end{align*}
+  \end{block}
+  \begin{block}{Initial Conditions}
+    \[
+      \tilde{v}(0)= v(0)+p^\star
+    \]
+  \end{block}
+\end{frame}
+\begin{frame}{Animosity: $r,s>0$}
 \begin{figure}
   \centering
   \includegraphics[height=0.9\textheight,width=\textwidth]{../figures/richardson_curves_1_1.png}
@@ -168,7 +218,7 @@ where
 \section{3 Nations}
 \begin{frame}
   \begin{block}{3 Nation Model}
-    \begin{equation}\label{eq:nation3}
+    \begin{equation}\label{eq:nation}
     \begin{bmatrix}
       x^\prime \\ y^\prime \\ z^\prime
     \end{bmatrix}
@@ -195,39 +245,8 @@ where
     \end{itemize}
   \end{block}
 \end{frame}
-\begin{frame}[allowframebreaks]{Equilibrium}
-  Let $A$ denote the matrix from \autoref{eq:nation3}. Assuming that $\det{A}\neq0$. We can find the equilibrium $p^\star=\left(x^\star,y^\star,z^\star\right)$. By solving 
-  \begin{block}{Finding the Equilibrium}
-    \begin{align*}
-      0&=Ap^\star+w\\
-      \implies p^\star&=A^{-1}w.
-    \end{align*}
-  \end{block}
-  We can shift coordinates to center our system at the equilibrium by making the transformation
-  \begin{block}{Coordinate Shift}
-    \begin{equation}
-      \tilde{v}=v+p^\star
-    \end{equation}
-  \end{block}
-  We take the time derivative in the new coordinates
-  \begin{block}{Substitution}
-    \begin{align*}
-      \tilde{v}^{\prime}=v^\prime
-			&= Av+w\\
-			&= A(\tilde{v}-p^\star)+w\\
-			&= A\tilde{v}-AA^{-1}w+w\\
-			&= A\tilde{v}
-    \end{align*}
-  \end{block}
-  \begin{block}{Initial Conditions}
-    \[
-      \tilde{v}(0)= v(0)+p^\star
-    \]
-  \end{block}
-\end{frame}
 \begin{frame}[allowframebreaks]{Phase Plane Analysis}
-  The character of our solutions can be seen from the determinant of our matrix $A$. This connects to the \emph{principal minors} in the Routh-Hourwitz criteria \footcite[Chapter 3.]{MoghadasJaberiDouraki2019}
-
+  The coordinate transformation to $p^\star$ is of the same form as the 2D case. Thus, we can analyze the character of $A$, and employ the 3D Routh-Hurwitz criteria to judge the character of the solutions.
   \begin{block}{Determinant}
     \begin{align*}
       \det{A}&= \begin{vmatrix}
@@ -240,8 +259,27 @@ where
     \end{align*}
   \end{block}
 \end{frame}
-%\begin{frame}{References}
-%  \bibliographystyle{apalike}
-%  \bibliography{references}
-%\end{frame}
+  \begin{frame}{Richardson 3D}
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_3D_0_0_0.png}
+    \end{figure}
+\end{frame}
+\begin{frame}{Future Goals}
+  \begin{itemize}
+    \item Streamline the codebase for less plugging in of parameters to generate the plots
+    \item Transform into hyperbolic coordinates
+      \begin{equation*}
+	\left[u,v\right]^T=\left[A\cosh(t),A\sinh(t)\right]^T
+      \end{equation*}
+  to study the phase angle $\phi$ of the solution, and to extend the phase angle to the 3D case.
+  \begin{itemize}
+    \item \textbf{Idea: } the idea behind this is to compress the information about the parameters into a single value $\phi$ and to use it in conjunction with $\det{A}$ for a deeper understanding of Richardson's system.
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{References}
+  \printbibliography
+\end{frame}
 \end{document}
