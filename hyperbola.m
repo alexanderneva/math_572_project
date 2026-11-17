@@ -19,19 +19,20 @@ U = P_1 * ini';
 u_0 = U(1);
 v_0 = U(2);
 %disp(model_1(ini))
+x_star = zeros(2);
 
 t = linspace(-2,2,200);
 sol = @(t,u) u(1)*xi_1 .* exp(omega*t) + u(2)*xi_2 .* exp(-omega*t);
 fig = figure();
-subplot(2,1,1);hold on;
+subplot(1,2,1);hold on;
 for k = 1:size(U,2)
   x = sol(t,U(:,k))(1,:);
   y = sol(t,U(:,k))(2,:);
   plot(x,y);
   %plot(x,y,'DisplayName',sprintf('initial = %.2f, %.2f',ini'(1,k),ini'(2,k)));
 endfor
-l1 = plot(t,sqrt(b/a)*t,'DisplayName',sprintf('Eigenline sqrt(b/a)=%.2f',sqrt(b/a)),'LineWidth',1);
-l2 = plot(t,-sqrt(b/a)*t,'DisplayName',sprintf('Eigenline -sqrt(b/a)=%.2f',-sqrt(b/a)),'LineWidth',1);
+l1 = plot(t,sqrt(b/a)*t,'k','DisplayName',sprintf('Eigenline sqrt(b/a)=%.2f',sqrt(b/a)),'LineWidth',1.2);
+l2 = plot(t,-sqrt(b/a)*t,'k','DisplayName',sprintf('Eigenline -sqrt(b/a)=%.2f',-sqrt(b/a)),'LineWidth',1.2);
 x_n = plot(t,zeros(size(t)),'k');
 y_n = plot(zeros(size(t)),t,'k');
 vecs = linspace(-3,3,25);
@@ -56,10 +57,14 @@ NY_V = A(2,2)*Y;
 %NY_U = normalize_cols(NY_U);
 %NY_V = normalize_cols(NY_V);
 X_N = zeros(size(X));
-NY = quiver(X_N,Y,NY_U,NY_V,'DisplayName','y-nullcline','LineWidth',1.);
+L = hypot(NY_U,NY_V);
+NY = quiver(X_N,Y,NY_U./L,NY_V./L,'DisplayName','y-nullcline','LineWidth',1.);
+eq=plot(x_star(1),x_star(2),'o','MarkerSize',7,
+'MarkerFaceColor','r','DisplayName',
+sprintf('Equilibrium (%g, %g)',x_star(1),x_star(2)));
 hold off;
 xlim([-2,2]); ylim([-2,2]);
-legend([l1,l2,NX,NY]);
+legend([l1,l2,NX,NY,eq]);
 title(sprintf("Relational spending, a=%g, b=%g",a,b));
 xlabel("Nation A");
 ylabel("Nation B");
@@ -67,7 +72,7 @@ grid on;
 axis on;
 sample = randperm(size(U,2),7);
 samples = U(:,sample);
-subplot(2,1,2);
+subplot(1,2,2);
 hold on;
 for k=1:size(samples,2)
   traj = sol(t,samples(:,k));
@@ -92,7 +97,7 @@ legend('show');
 grid on;
 %waitfor(gcf);
 %hold off;
-print('figures/model_1_curves.png', '-dpng', '-S1300,1300');
+print('figures/model_1_curves.png', '-dpng', '-S2100,1300');
 
 
 %vecs = linspace(-3,3,20);

@@ -3,7 +3,7 @@ b = 3;
 m = 5;
 n = 5;
 r=1;
-s=1;
+s=-1;
 A = [-m, a; b, -n];
 q = [r;s];
 x_star = -inv(A)*q;
@@ -33,23 +33,25 @@ for k=1:size(ini,1)
   plot(yf(:,1),yf(:,2));
   plot(yb(:,1),yb(:,2));
 endfor
-plot(t+x_star(1),(vecs(2,1)/vecs(1,1))*t+x_star(2),'k','LineWidth',1.);
-plot(t+x_star(1),(vecs(2,2)/vecs(1,2)) *t+x_star(2),'k','LineWidth',1.);
+l1=plot(t+x_star(1),(vecs(2,1)/vecs(1,1))*t+x_star(2),'k','DisplayName',
+sprintf('Eigenline slope %g',vecs(2,1)/vecs(1,1)),'LineWidth',1.2);
+l2=plot(t+x_star(1),(vecs(2,2)/vecs(1,2)) *t+x_star(2),'k','DisplayName',
+sprintf('Eigenline slope %g',vecs(2,2)/vecs(1,2)),'LineWidth',1.2);
 X_N = (a/m)*(t-x_star(2))+x_star(1);
 NX_U = zeros(size(X_N));
 NX_V = A(2,1)*X_N+A(2,2)*t+q(2);
 L = hypot(NX_U,NX_V);
 L(L==0)=1;
 quiver(X_N,t,0.1*(NX_U./L),0.1*(NX_V./L),0,'m','LineWidth',1.);
-NX = plot(X_N,t,'r','DisplayName','x-nullcline','LineWidth',1.);
+NX = plot(X_N,t,'r','DisplayName','x-nullcline','LineWidth',1.2);
 Y_N = (b/n)*(t-x_star(1))+x_star(2);
 NY_U = A(1,1)*t+A(1,2)*Y_N+q(1);
 NY_V = zeros(size(Y_N));
 L = hypot(NY_U,NY_V);
 L(L==0)=1;
 NY = quiver(t,Y_N,0.1*(NY_U./L),0.1*(NY_V./L),0,'m','LineWidth',1.);
-NY=plot(t,Y_N,'g','DisplayName','y-nullcline','LineWidth',1.);
-eq=plot(x_star(1),x_star(2),'o','MarkerSize',5,
+NY=plot(t,Y_N,'g','DisplayName','y-nullcline','LineWidth',1.2);
+eq=plot(x_star(1),x_star(2),'o','MarkerSize',10,
 'MarkerFaceColor','r','DisplayName',
 sprintf('Equilibrium (%g, %g)',x_star(1),x_star(2)));
 hold off;
@@ -58,7 +60,7 @@ xlabel("Nation A");
 ylabel("Nation B");
 xlim([-1,1]);
 ylim([-1,1]);
-legend([eq,NX,NY],'Location','northwest');
+legend([eq,l1,l2,NX,NY],'Location','northwest');
 subplot(2,1,2);
 [X,Y] = meshgrid(linspace(-1,1,25));
 a = 5;
@@ -87,23 +89,26 @@ for k=1:size(ini,1)
   plot(yf(:,1),yf(:,2));
   plot(yb(:,1),yb(:,2));
 endfor
-plot(t+x_star(1),(vecs(2,1))/vecs(1,1)*t+x_star(2),'k','LineWidth',1.);
-plot(t+x_star(1),(vecs(2,2))/vecs(1,2)*t+x_star(2),'k','LineWidth',1.);
+l1=plot(t+x_star(1),(vecs(2,1)/vecs(1,1))*t+x_star(2),'k','DisplayName',
+sprintf('Eigenline slope %g',vecs(2,1)/vecs(1,1)),'LineWidth',1.2);
+l2=plot(t+x_star(1),(vecs(2,2)/vecs(1,2)) *t+x_star(2),'k','DisplayName',
+sprintf('Eigenline slope %g',vecs(2,2)/vecs(1,2)),'LineWidth',1.2);
+X_N = (a/m)*(t-x_star(2))+x_star(1);
 X_N = (a/m)*(t-x_star(2))+x_star(1);
 NX_U = zeros(size(X_N));
 NX_V = A(2,1)*X_N+A(2,2)*t+q(2);
 L = hypot(NX_U,NX_V);
 L(L==0)=1;
 NX = quiver(X_N,t,0.1*(NX_U./L),0.1*(NX_V./L),0,'m','LineWidth',1.);
-NX = plot(X_N,t,'r','DisplayName','x-nullcline','LineWidth',1.);
+NX = plot(X_N,t,'r','DisplayName','x-nullcline','LineWidth',1.2);
 Y_N = (b/n)*(t-x_star(1))+x_star(2);
 NY_U = A(1,1)*t+A(1,2)*Y_N+q(1);
 NY_V = zeros(size(Y_N));
 L = hypot(NY_U,NY_V);
 L(L==0)=1;
 NY = quiver(t,Y_N,0.1*(NY_U./L),0.1*(NY_V./L),0,'m','LineWidth',1.);
-NY=plot(t,Y_N,'g','DisplayName','y-nullcline','LineWidth',1.);
-eq=plot(x_star(1),x_star(2),'o','MarkerSize',5,
+NY=plot(t,Y_N,'g','DisplayName','y-nullcline','LineWidth',1.2);
+eq=plot(x_star(1),x_star(2),'o','MarkerSize',10,
 'MarkerFaceColor','r','DisplayName',
 sprintf('Equilibrium (%g, %g)',x_star(1),x_star(2)));
 title(sprintf("Relational spending, m=%g n=%g a=%g, b=%g \n r=%g, s=%g, Det(A) = %g ",m,n,a,b,r,s,det(A)));
@@ -111,8 +116,8 @@ xlabel("Nation A");
 ylabel("Nation B");
 xlim([-1,1]);
 ylim([-1,1]);
-legend([eq,NX,NY],'Location','northwest');
-print('figures/richardson_curves.png', '-dpng', '-S1300,1300');
+legend([eq,l1,l2,NX,NY],'Location','northwest');
+print(sprintf('figures/richardson_curves_%g_%g.png',r,s), '-dpng', '-S1300,1300');
 
 
 

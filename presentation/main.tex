@@ -8,8 +8,9 @@
 \usepackage{hyperref}
 \usepackage{xcolor}
 \usepackage{subfig}
-\usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{mwe}
+\usepackage[style=authoryear, backend=bibtex]{biblatex}
+\addbibresource{references.bib}
 \definecolor{matlabblue}{RGB}{0, 91, 150}
 \definecolor{matlabgray}{RGB}{240, 240, 240}
 
@@ -43,11 +44,39 @@
 \author{Alexander Shulhan}
 \begin{document}
 \maketitle
-\section{Hyperbola}
+\section[allowframebreaks]{Background}
 \begin{frame}
+  \begin{columns}[c]
+    \begin{column}{0.4\textwidth}
+  \begin{figure}
+    \includegraphics[height=0.9\textheight,width=0.5\textwidth,keepaspectratio]{Screenshot 2026-11-17 at 14-41-27 ProQuest Ebook Central - Reader.png}
+    \centering
+    \caption{Cover of Biography \footcite{gleditsch2020richardson}}
+  \end{figure}
+\end{column}
+\begin{column}{0.5\textwidth}
+  \begin{block}{Arms Race Dynamics}
+  \begin{itemize}
+    \item  Lewis Fry Richardson wrote a book on war and peace published posthumously \footfullcite{richardson1960arms}
+    \item Nation's will react to one another's spending in an arms race.
+    \item Their resources are limited do to internal ecnomic constraints
+  \end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}{Questions}
+  \begin{itemize}
+    \item Under what conditions is peace reached? (stability)
+    \item When will the spending escalate? (unstable)
+    \item Can we use a phase angle $\phi$ to encapsulate system behaviour? (Ran out of time)
+\end{itemize}
+\end{frame}
 
+\section{Undamped Case}
+\begin{frame}[allowframebreaks]{Undamped Analysis}
 \begin{block}{Mutual Fear}
-The initial value problem for model 1 is given by
+The initial value problem for the undamped model is given by
 \begin{equation}\label{eq:model1}
   \begin{bmatrix}
     x^{\prime}\\
@@ -64,10 +93,29 @@ The initial value problem for model 1 is given by
 \end{equation}
 where $a$ and $b$ represent the spending per unit time of nations $A$ and $B$ respectively.
 \end{block}
+\begin{block}{Eigenvalues Determine Stability}
+  The eigenvectors $v_1,v_2$ and eigenvalues $\lambda_1,\lambda_2$ of \autoref{eq:model1} are
+\begin{equation*}
+  \lambda_1,\lambda_2 = \pm \sqrt{ab},\quad P:=\left[v_1~v_2\right]=\begin{bmatrix}\sqrt{\frac{a}{a+b}} & \sqrt{\frac{a}{a+b}}\\
+  \sqrt{\frac{b}{a+b}} & -\sqrt{\frac{b}{a+b}}
+\end{bmatrix}
+\end{equation*}
+$\text{sign}(\lambda_1)\neq\text{sign}(\lambda_2)$ implies $p^\star$ is a saddle node.
+\end{block}
+\begin{block}{Analytical Solution}
+\begin{equation}
+  \phi(t) = c_1e^{\sqrt{ab}t}v_1 + c_2 e^{-\sqrt{ab}t}v_2,\quad c_1,c_2 \in \R
+\end{equation}
+\end{block}
+\begin{figure}
+  \centering 
+  \includegraphics[height=0.9\textheight,width=\textwidth]{../figures/model_1_curves.png}
+  \caption{Hyperbolae}
+\end{figure}
 \end{frame}
-\section{Richardson}
-\begin{frame}
-
+\section{2 Nations}
+\subsection{Experiments}
+\begin{frame}[allowframebreaks]{Damped Case}
 \begin{block}{Richardson}
 The initial value problem for the Richardson model is given by
 \begin{equation}\label{eq:richardson}
@@ -89,6 +137,33 @@ where
   q:=\begin{bmatrix}r\\ s\end{bmatrix},r,s\in\R.
 \end{equation*}
 \end{block}
+\end{frame}
+\begin{frame}[allowframebreaks]{Animosity: $r,s>0$}
+\begin{figure}
+  \centering
+  \includegraphics[height=0.9\textheight,width=\textwidth]{../figures/richardson_curves_1_1.png}
+\end{figure}
+\end{frame}
+\begin{frame}{Nation B Good Will $r>0,s<0$}
+\begin{figure}
+  \centering
+  \includegraphics[height=0.9\textheight,width=\textwidth]{../figures/richardson_curves_1_-1.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Common Good Will $r,s<0$}
+\begin{figure}
+  \centering
+  \includegraphics[height=0.9\textheight,width=\textwidth]{../figures/richardson_curves_-1_-1.5.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Observations}
+  \begin{itemize}
+    \item \textbf{Routh-Hurwitz} $det(A)>0$ shows stability 
+    \item \textbf{nullclines} indicate direction changes of the vector field
+    \item \textbf{Grievances:} inspite of good will, in the case that economic dampening does not outweigh spending $\det{A} <0$ positive feedback loop ensues. (Arms race)
+\end{itemize}
 \end{frame}
 \section{3 Nations}
 \begin{frame}
@@ -151,7 +226,7 @@ where
   \end{block}
 \end{frame}
 \begin{frame}[allowframebreaks]{Phase Plane Analysis}
-  The character of our solutions can be seen from the determinant of our matrix $A$. This connects to the \emph{principal minors} in the Routh-Hourwitz criteria \cite[Chapter 3.]{MoghadasJaberiDouraki2019}
+  The character of our solutions can be seen from the determinant of our matrix $A$. This connects to the \emph{principal minors} in the Routh-Hourwitz criteria \footcite[Chapter 3.]{MoghadasJaberiDouraki2019}
 
   \begin{block}{Determinant}
     \begin{align*}
@@ -165,8 +240,8 @@ where
     \end{align*}
   \end{block}
 \end{frame}
-\begin{frame}{References}
-  \bibliographystyle{apalike}
-  \bibliography{references}
-\end{frame}
+%\begin{frame}{References}
+%  \bibliographystyle{apalike}
+%  \bibliography{references}
+%\end{frame}
 \end{document}
