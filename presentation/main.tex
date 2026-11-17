@@ -48,7 +48,7 @@
 
 \begin{block}{Mutual Fear}
 The initial value problem for model 1 is given by
-\begin{equation}\label{model1}
+\begin{equation}\label{eq:model1}
   \begin{bmatrix}
     x^{\prime}\\
     y^{\prime}
@@ -70,7 +70,7 @@ where $a$ and $b$ represent the spending per unit time of nations $A$ and $B$ re
 
 \begin{block}{Richardson}
 The initial value problem for the Richardson model is given by
-\begin{equation}\label{richardson}
+\begin{equation}\label{eq:richardson}
   \begin{bmatrix}
     x^{\prime}\\
     y^{\prime}
@@ -93,19 +93,80 @@ where
 \section{3 Nations}
 \begin{frame}
   \begin{block}{3 Nation Model}
-  \begin{equation}
+    \begin{equation}\label{eq:nation3}
     \begin{bmatrix}
       x^\prime \\ y^\prime \\ z^\prime
     \end{bmatrix}
     = \begin{bmatrix}
-      -m & a & c_2 \\
-      b & -n & d_2 \\
-      c_1 & d_1 & -p
+      -m & a & c_{13} \\
+      b & -n & d_{23} \\
+      c_{31} & d_{32} & -p
       \end{bmatrix}
       \begin{bmatrix}
 	x \\ y \\ z
-	\end{bmatrix}+\begin{bmatrix}r\\s\\q\end{bmatrix}
+	\end{bmatrix}+\begin{bmatrix}g_{1}\\g_{2}\\g_{3}\end{bmatrix},\quad a,b,c_{31},c_{13},d_{32},d_{23},m,n,p>0
   \end{equation}
 \end{block}
+\begin{block}{Initial Conditions}
+  \[ \begin{bmatrix}x(0)&y(0)&z(0)\end{bmatrix}^T=\begin{bmatrix}x_0 & y_0 & z_0\end{bmatrix}^T
+\]
+\end{block}
+  \begin{block}{Variables}
+    \begin{itemize}
+      \item $m$,$n$,$a$,$b$ as in the previous model \autoref{eq:richardson}
+      \item $c_{ij},d_{ij}$ spending rate of nation $i$ in response to spending of nation $j$
+      \item $p$ economic decay of nation 3
+      \item $g_i\in\R$ is the goodwill of nation $i$
+    \end{itemize}
+  \end{block}
+\end{frame}
+\begin{frame}[allowframebreaks]{Equilibrium}
+  Let $A$ denote the matrix from \autoref{eq:nation3}. Assuming that $\det{A}\neq0$. We can find the equilibrium $p^\star=\left(x^\star,y^\star,z^\star\right)$. By solving 
+  \begin{block}{Finding the Equilibrium}
+    \begin{align*}
+      0&=Ap^\star+w\\
+      \implies p^\star&=A^{-1}w.
+    \end{align*}
+  \end{block}
+  We can shift coordinates to center our system at the equilibrium by making the transformation
+  \begin{block}{Coordinate Shift}
+    \begin{equation}
+      \tilde{v}=v+p^\star
+    \end{equation}
+  \end{block}
+  We take the time derivative in the new coordinates
+  \begin{block}{Substitution}
+    \begin{align*}
+      \tilde{v}^{\prime}=v^\prime
+			&= Av+w\\
+			&= A(\tilde{v}-p^\star)+w\\
+			&= A\tilde{v}-AA^{-1}w+w\\
+			&= A\tilde{v}
+    \end{align*}
+  \end{block}
+  \begin{block}{Initial Conditions}
+    \[
+      \tilde{v}(0)= v(0)+p^\star
+    \]
+  \end{block}
+\end{frame}
+\begin{frame}[allowframebreaks]{Phase Plane Analysis}
+  The character of our solutions can be seen from the determinant of our matrix $A$. This connects to the \emph{principal minors} in the Routh-Hourwitz criteria \cite[Chapter 3.]{MoghadasJaberiDouraki2019}
+
+  \begin{block}{Determinant}
+    \begin{align*}
+      \det{A}&= \begin{vmatrix}
+      -m & a & c_{13} \\
+      b & -n & d_{23} \\
+      c_{31} & d_{32} & -p
+    \end{vmatrix}\\
+	     &= -m\begin{vmatrix}-n& d_{23}\\
+	       d_{32} & -p\end{vmatrix}+n\begin{vmatrix}-m & c_{13}\\ c_{31} & -p\end{vmatrix}-p\begin{vmatrix}-m & a \\ b & -n\end{vmatrix}
+    \end{align*}
+  \end{block}
+\end{frame}
+\begin{frame}{References}
+  \bibliographystyle{apalike}
+  \bibliography{references}
 \end{frame}
 \end{document}
