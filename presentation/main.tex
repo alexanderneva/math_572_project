@@ -59,7 +59,7 @@
   \begin{itemize}
     \item  Lewis Fry Richardson wrote a book on modelling war and peace, published posthumously \footfullcite{richardson1960arms}
     \item Nation's will react to one another's spending in an arms race.
-    \item Their resources are limited do to internal ecnomic constraints
+    \item Their resources are limited in spite of constraints
   \end{itemize}
 \end{block}
 \end{column}
@@ -74,13 +74,17 @@
 \end{frame}
 \begin{frame}{Numerical Tools Used}
   \begin{itemize}
-    \item \textbf{\href{https://octave.org/}{GNU Octave}:} free MATLAB, mostly cross compatible 
+    \item \textbf{\href{https://octave.org/}{GNU Octave}:} free MATLAB, mostly cross compatible. Notable exception are \texttt{pplane8.m,pplane9.m,pplane2014b.m}$\dots$
       \begin{itemize}
 	\item \texttt{ode45}: numerically solve the system
 	\item \texttt{quiver,quiver3}: plot vector fields 
 	\item \texttt{eig}: find the eigenvalues and eigenvectors for more general case. The undamped case was solved by hand analytically.
+	\item \textbf{Codebase:} the current code for the project is on github \href{https://github.com/alexanderneva/math_572_project}{username: alexanderneva}.
       \end{itemize}
     \item \textbf{\href{https://gemini.google.com/app}{Gemini Thinking}:} questions about Richardson's book in absence of having a copy, help translating python to GNU Octave, GNU Octave questions like how to format plots and make labels, etc.
+      \begin{itemize}
+	\item \textbf{In particular: } How did Richardson view the relationships between 3 nations for grievance terms $\left[g_1,g_2,g_3\right]$. He explains it in the book \footcite{richardson1960arms} which is currently in the University's \href{https://www.ualberta.ca/en/facilities/f225-research--collection-resource-facility.html}{RCRF}.
+      \end{itemize}
   \end{itemize}
 \end{frame}
 \section{Undamped Case}
@@ -124,7 +128,7 @@ $\text{sign}(\lambda_1)\neq\text{sign}(\lambda_2)$ implies $p^\star$ is a saddle
 \end{figure}
 \end{frame}
 \section{2 Nations}
-\begin{frame}[allowframebreaks]{Damped Case}
+\begin{frame}[allowframebreaks]{Damped Case}\label{section2}
 \begin{block}{Richardson}
 The initial value problem for the Richardson model is given by
 \begin{equation}\label{eq:richardson}
@@ -155,21 +159,26 @@ The initial value problem for the Richardson model is given by
     -m & a \\
     b & -n 
   \end{bmatrix}\]
-  Since the $\text{Tr }A<0$ (\autoref{eq:tr}), the character of our solutions can be seen from the determinant of our matrix $A$.\footcite[Chapter 3.]{MoghadasJaberiDouraki2019}
+  For characteristic polynomial $p(\lambda)$, recall the 2D Routh-Hurwitz conditions\footcite[Chap. 3]{MoghadasJaberiDouraki2019}. That is, $A$ defines a stable system if in
+  \[
+    p(\lambda)=\lambda^2-(\text{Tr }A)\lambda+\det{A}
+  \]
+  $\text{Tr }A < 0$ and $\det{A}>0$.
+  Since the $\text{Tr }A<0$ (\autoref{eq:tr}), the character of our solutions can be seen from the determinant of our matrix $A$.
 \end{block}
 \end{frame}
 \begin{frame}[allowframebreaks]{Equilibrium}
-  Let $A$ denote the matrix from \autoref{eq:richardson}. Assuming that $\det{A}\neq0$. We can find the equilibrium $p^\star=\left(x^\star,y^\star\right)$. By solving 
+  Let $A$ denote the matrix from \autoref{eq:richardson} and $w:=\left[r,s\right]^T$. Assuming that $\det{A}\neq0$, we can find the equilibrium $p^\star=\left(x^\star,y^\star\right)$. By solving 
   \begin{block}{Finding the Equilibrium}
     \begin{align*}
       0&=Ap^\star+w\\
-      \implies p^\star&=A^{-1}w.
+      \implies p^\star&=-A^{-1}w.
     \end{align*}
   \end{block}
   We can shift coordinates to center our system at the equilibrium by making the transformation
   \begin{block}{Coordinate Shift}
     \begin{equation}
-      \tilde{v}=v+p^\star
+      \tilde{v}=v-p^\star
     \end{equation}
   \end{block}
   We take the time derivative in the new coordinates
@@ -177,14 +186,14 @@ The initial value problem for the Richardson model is given by
     \begin{align*}
       \tilde{v}^{\prime}=v^\prime
 			&= Av+w\\
-			&= A(\tilde{v}-p^\star)+w\\
+			&= A(\tilde{v}+p^\star)+w\\
 			&= A\tilde{v}-AA^{-1}w+w\\
 			&= A\tilde{v}
     \end{align*}
   \end{block}
   \begin{block}{Initial Conditions}
     \[
-      \tilde{v}(0)= v(0)+p^\star
+      \tilde{v}(0)= v(0)-p^\star
     \]
   \end{block}
 \end{frame}
@@ -246,7 +255,14 @@ The initial value problem for the Richardson model is given by
   \end{block}
 \end{frame}
 \begin{frame}[allowframebreaks]{Phase Plane Analysis}
-  The coordinate transformation to $p^\star$ is of the same form as the 2D case. Thus, we can analyze the character of $A$, and employ the 3D Routh-Hurwitz criteria to judge the character of the solutions.
+  The coordinate transformation to $p^\star$ is of the same form as the 2D case. Thus, we can analyze the character of $A$, and employ the 3D Routh-Hurwitz criteria to judge the character of the solutions. The 3D Routh-Hurwitz conditions are\footfullcite{Li2018}
+  \begin{equation}
+    Tr{A}<0,\quad \det{A}<0,\quad\Lambda\text{Tr }A-\det{A} <0\\
+  \end{equation}
+  where $\Lambda$ is the sum of the principal minors of $A$
+  \begin{equation}
+    \Lambda =
+  \end{equation}
   \begin{block}{Determinant}
     \begin{align*}
       \det{A}&= \begin{vmatrix}
@@ -258,11 +274,21 @@ The initial value problem for the Richardson model is given by
 	       d_{32} & -p\end{vmatrix}+n\begin{vmatrix}-m & c_{13}\\ c_{31} & -p\end{vmatrix}-p\begin{vmatrix}-m & a \\ b & -n\end{vmatrix}
     \end{align*}
   \end{block}
+  \begin{itemize}
+    \item Interpret the principal minors as relationship of nation $i$ with nation $j$, extending the analysis in \autoref{section2}
+  \end{itemize}
 \end{frame}
-  \begin{frame}{Richardson 3D}
+\begin{frame}{Richardson 3D}
+  Since we are dealing with 12 parameters, we examine a couple of scenarios for the purposes of this presentation. First, let's define \emph{spending} power of a nation
     \begin{figure}
       \centering
       \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_3D_0_0_0.png}
+    \end{figure}
+  \end{frame}
+  \begin{frame}{Richardson 3D $r,q>0, s<0$}
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_3D_1_-1_1.png}
     \end{figure}
 \end{frame}
 \begin{frame}{Future Goals}
@@ -270,12 +296,13 @@ The initial value problem for the Richardson model is given by
     \item Streamline the codebase for less plugging in of parameters to generate the plots
     \item Transform into hyperbolic coordinates
       \begin{equation*}
-	\left[u,v\right]^T=\left[A\cosh(t),A\sinh(t)\right]^T
+	\left[u,v\right]^T=\left[A\cosh(\sqrt{ab}t+\phi),A\sinh(\sqrt{ab}t+\phi)\right]^T
       \end{equation*}
   to study the phase angle $\phi$ of the solution, and to extend the phase angle to the 3D case.
   \begin{itemize}
     \item \textbf{Idea: } the idea behind this is to compress the information about the parameters into a single value $\phi$ and to use it in conjunction with $\det{A}$ for a deeper understanding of Richardson's system.
   \end{itemize}
+\item Study Richardson's work to further understand his point of view on arm's race modelling.
 \end{itemize}
 \end{frame}
 
