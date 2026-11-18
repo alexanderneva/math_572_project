@@ -1,5 +1,4 @@
 \documentclass{beamer}
-
 \usetheme{Madrid}
 \usecolortheme{seagull}
 \input{preamble.tex}
@@ -166,7 +165,18 @@ The initial value problem for the Richardson model is given by
   $\text{Tr }A < 0$ and $\det{A}>0$.
   Since the $\text{Tr }A<0$ (\autoref{eq:tr}), the character of our solutions can be seen from the determinant of our matrix $A$.
 \end{block}
+\begin{block}{Interpretation of Determinant}
+\begin{align*}
+  \det{A} &=  \begin{vmatrix}
+      -m & a \\
+      b & -n 
+    \end{vmatrix} < 0
+	  &\implies mn-ab < 0\\
+	  &\implies 1 < \frac{m}{a}\frac{n}{b}
+  \end{align*}
+\end{block}
 \end{frame}
+
 \begin{frame}[allowframebreaks]{Equilibrium}
   Let $A$ denote the matrix from \autoref{eq:richardson} and $w:=\left[r,s\right]^T$. Assuming that $\det{A}\neq0$, we can find the equilibrium $p^\star=\left(x^\star,y^\star\right)$. By solving 
   \begin{block}{Finding the Equilibrium}
@@ -232,13 +242,13 @@ The initial value problem for the Richardson model is given by
       x^\prime \\ y^\prime \\ z^\prime
     \end{bmatrix}
     = \begin{bmatrix}
-      -m & a & c_{13} \\
-      b & -n & d_{23} \\
-      c_{31} & d_{32} & -p
+      -m & a_{2} & a_{3} \\
+      b_1 & -n & b_3 \\
+      c_1 & c_2 & -p
       \end{bmatrix}
       \begin{bmatrix}
 	x \\ y \\ z
-	\end{bmatrix}+\begin{bmatrix}g_{1}\\g_{2}\\g_{3}\end{bmatrix},\quad a,b,c_{31},c_{13},d_{32},d_{23},m,n,p>0
+	\end{bmatrix}+\begin{bmatrix}g_{1}\\g_{2}\\g_{3}\end{bmatrix},\quad a_2,a_3,b_1,b_3,c_1,c_2,m,n,p>0
   \end{equation}
 \end{block}
 \begin{block}{Initial Conditions}
@@ -247,48 +257,56 @@ The initial value problem for the Richardson model is given by
 \end{block}
   \begin{block}{Variables}
     \begin{itemize}
-      \item $m$,$n$,$a$,$b$ as in the previous model \autoref{eq:richardson}
-      \item $c_{ij},d_{ij}$ spending rate of nation $i$ in response to spending of nation $j$
+      \item $m$,$n$, as in the previous model \autoref{eq:richardson}
+      \item $a_i$ spending rate of nation of nation A on nation B and C. Defined similarly for nations B and C
       \item $p$ economic decay of nation 3
       \item $g_i\in\R$ is the goodwill of nation $i$
     \end{itemize}
   \end{block}
 \end{frame}
+
 \begin{frame}[allowframebreaks]{Phase Plane Analysis}
   The coordinate transformation to $p^\star$ is of the same form as the 2D case. Thus, we can analyze the character of $A$, and employ the 3D Routh-Hurwitz criteria to judge the character of the solutions. The 3D Routh-Hurwitz conditions are\footfullcite{Li2018}
   \begin{equation}
-    Tr{A}<0,\quad \det{A}<0,\quad\Lambda\text{Tr }A-\det{A} <0\\
+    \text{Tr }A<0,\quad \det{A}<0,\quad\Lambda\text{Tr }A-\det{A} <0
   \end{equation}
-  where $\Lambda$ is the sum of the principal minors of $A$
+  where $\Lambda$ is the sum of the $2\times 2$ principal minors of the $A$.
   \begin{equation}
-    \Lambda =
+    \Lambda = \begin{vmatrix}-n& b_3\\
+	       c_2 & -p\end{vmatrix}+\begin{vmatrix}-m & a_3\\ c_1 & -p\end{vmatrix} + \begin{vmatrix}-m & a_2 \\ b_1 & -n\end{vmatrix}
   \end{equation}
-  \begin{block}{Determinant}
+\begin{block}{Determinant}
+  Expanding along row 1, we have
     \begin{align*}
-      \det{A}&= \begin{vmatrix}
-      -m & a & c_{13} \\
-      b & -n & d_{23} \\
-      c_{31} & d_{32} & -p
-    \end{vmatrix}\\
-	     &= -m\begin{vmatrix}-n& d_{23}\\
-	       d_{32} & -p\end{vmatrix}+n\begin{vmatrix}-m & c_{13}\\ c_{31} & -p\end{vmatrix}-p\begin{vmatrix}-m & a \\ b & -n\end{vmatrix}
+      \det{A}&=\begin{vmatrix}
+      -m & a_{2} & a_{3} \\
+      b_1 & -n & b_3 \\
+      c_1 & c_2 & -p
+      \end{vmatrix}\\
+	     &= -m\begin{vmatrix}-n& b_3\\
+	       c_2 & -p\end{vmatrix}-a_2\begin{vmatrix}b_1 & b_3\\ c_1 & -p\end{vmatrix}+ a_3\begin{vmatrix}b_1 & -n \\ c_1 & c_2\end{vmatrix}\\
+		   &= -mnp +mb_3 c_2 + pa_1 b_2 + a_2 b_3 c_1 + a_3 b_1 c_2 + n a_3 c_ 2
     \end{align*}
-  \end{block}
-  \begin{itemize}
-    \item Interpret the principal minors as relationship of nation $i$ with nation $j$, extending the analysis in \autoref{section2}
-  \end{itemize}
+\end{block}
 \end{frame}
+
 \begin{frame}{Richardson 3D}
-  Since we are dealing with 12 parameters, we examine a couple of scenarios for the purposes of this presentation. First, let's define \emph{spending} power of a nation
+  Since we are dealing with 12 parameters, we examine a couple of scenarios for the purposes of this presentation. First, let's define \emph{spending} power of a nation 
     \begin{figure}
       \centering
       \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_3D_0_0_0.png}
     \end{figure}
-  \end{frame}
-  \begin{frame}{Richardson 3D $r,q>0, s<0$}
+\end{frame}
+  \begin{frame}{Richardson 3D $r,q>0, s<0$, Positive Quadrant}
     \begin{figure}
       \centering
       \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_3D_1_-1_1.png}
+    \end{figure}
+\end{frame}
+  \begin{frame}{Richardson 3D $r>0, s,q<0$}
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_3D_1_-1_-1.png}
     \end{figure}
 \end{frame}
 \begin{frame}{Future Goals}
