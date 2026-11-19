@@ -38,7 +38,7 @@
 % \setmainfont{sTIX Two Text}
 % \setmathfont{sTIX Two Math}
 
-\title{Mutual Fear Model}
+\title{An Application of Richardson's Arms Race Model to Three Nations}
 \subtitle{MATH 572}
 \author{Alexander Shulhan}
 \begin{document}
@@ -68,7 +68,7 @@
   \begin{itemize}
     \item Under what conditions is peace reached? (stability)
     \item When will the spending escalate? (unstable)
-    \item Can we use a phase angle $\phi$ to encapsulate system behaviour? (Ran out of time)
+    \item In the 3 nation scenario, how do alliances impact an arms race?
 \end{itemize}
 \end{frame}
 \begin{frame}{Numerical Tools Used}
@@ -165,19 +165,22 @@ The initial value problem for the Richardson model is given by
   $\text{Tr }A < 0$ and $\det{A}>0$.
   Since the $\text{Tr }A<0$ (\autoref{eq:tr}), the character of our solutions can be seen from the determinant of our matrix $A$.
 \end{block}
-\begin{block}{Interpretation of Determinant}
-\begin{align*}
-  \det{A} &=  \begin{vmatrix}
-      -m & a \\
-      b & -n 
-    \end{vmatrix} < 0
-	  &\implies mn-ab < 0\\
-	  &\implies 1 < \frac{m}{a}\frac{n}{b}
-  \end{align*}
-\end{block}
+%\begin{block}{Interpretation of Determinant}
+%\begin{align*}
+%  \det{A} &=  \begin{vmatrix}
+%      -m & a \\
+%      b & -n 
+%    \end{vmatrix} < 0
+%	  &\implies mn-ab < 0\\
+%	  &\implies \frac{1}{\frac{m}{a}} < \frac{n}{b}
+%  \end{align*}
+%  \begin{itemize}
+%    \item \textbf{Reciprical Relationship}
+%  \end{itemize}
+%\end{block}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Equilibrium}
+\begin{frame}[allowframebreaks]{Equilibrium Coordinate Change}
   Let $A$ denote the matrix from \autoref{eq:richardson} and $w:=\left[r,s\right]^T$. Assuming that $\det{A}\neq0$, we can find the equilibrium $p^\star=\left(x^\star,y^\star\right)$. By solving 
   \begin{block}{Finding the Equilibrium}
     \begin{align*}
@@ -208,9 +211,12 @@ The initial value problem for the Richardson model is given by
   \end{block}
 \end{frame}
 \begin{frame}{Animosity: $r,s>0$}
+  \begin{itemize}
+    \item Equilibrium shifts from quadrant I to III as the determinant changes sign
+  \end{itemize}
 \begin{figure}
   \centering
-  \includegraphics[height=0.9\textheight,width=\textwidth]{../figures/richardson_curves_1_1.png}
+  \includegraphics[height=0.7\textheight,width=\textwidth]{../figures/richardson_curves_1_1.png}
 \end{figure}
 \end{frame}
 \begin{frame}{Nation B Good Will $r>0,s<0$}
@@ -265,16 +271,20 @@ The initial value problem for the Richardson model is given by
   \end{block}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Phase Plane Analysis}
-  The coordinate transformation to $p^\star$ is of the same form as the 2D case. Thus, we can analyze the character of $A$, and employ the 3D Routh-Hurwitz criteria to judge the character of the solutions. The 3D Routh-Hurwitz conditions are\footfullcite{Li2018}
+\begin{frame}{Phase Plane Analysis}
+  The coordinate transformation to $p^\star$ is of the same form as the 2D case. Thus, we can analyze the character of $A$, and employ the 3D Routh-Hurwitz criteria to judge the solutions. The 3D Routh-Hurwitz conditions are\footfullcite{Li2018}
+  \begin{block}{3D Routh-Hurwitz}
   \begin{equation}
     \text{Tr }A<0,\quad \det{A}<0,\quad\Lambda\text{Tr }A-\det{A} <0
   \end{equation}
-  where $\Lambda$ is the sum of the $2\times 2$ principal minors of the $A$.
+  where $\Lambda$ is the sum of the $2\times 2$ principal minors of $A$.
   \begin{equation}
     \Lambda = \begin{vmatrix}-n& b_3\\
 	       c_2 & -p\end{vmatrix}+\begin{vmatrix}-m & a_3\\ c_1 & -p\end{vmatrix} + \begin{vmatrix}-m & a_2 \\ b_1 & -n\end{vmatrix}
   \end{equation}
+    \end{block}
+    \end{frame}
+    \begin{frame}
 \begin{block}{Determinant}
   Expanding along row 1, we have
     \begin{align*}
@@ -288,30 +298,102 @@ The initial value problem for the Richardson model is given by
 		   &= -mnp +mb_3 c_2 + pa_1 b_2 + a_2 b_3 c_1 + a_3 b_1 c_2 + n a_3 c_ 2
     \end{align*}
 \end{block}
+\begin{block}{Interpretation}
+  We can see that the only negative contribution to the determinant comes from the combined economic damping term 
+  \[-mnp\]
+  whereas, the more nations are spending on one another, the more the determinant is pushed toward positivity (instability).
+\end{block}
 \end{frame}
-
-\begin{frame}{Richardson 3D}
-  Since we are dealing with 12 parameters, we examine a couple of scenarios for the purposes of this presentation. First, let's define \emph{spending} power of a nation 
+\section{Richardson 3D: Scenarios}
+\begin{frame}{Richardson 3D: Peaceful times? Equilibrium at Origin}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
     \begin{figure}
       \centering
       \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_3D_0_0_0.png}
     \end{figure}
+  \end{column}
+  \begin{column}{0.4\textwidth}
+    \begin{block}{Scenario}
+      \begin{itemize}
+	\item Strong Nation A $m=1$, weaker Nations B and C
+	\item Nations B and C are twice as weak but $b_3=1$ and $c_2=1$: they are stocking up weapons on eachother
+	\item \textbf{Takeaway: } Nation A's lower spending and economic strength, de-escalate the arms race between Nation B and C (\textbf{stable})
+      \end{itemize}
+    \end{block}
+  \end{column}
+\end{columns}
 \end{frame}
-  \begin{frame}{Richardson 3D $r,q>0, s<0$, Positive Quadrant}
+\begin{frame}{Richardson 3D: Allies?}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
     \begin{figure}
       \centering
-      \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_3D_1_-1_1.png}
+      \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_0.5_3D_0_0_0.png}
     \end{figure}
+  \end{column}
+  \begin{column}{0.4\textwidth}
+    \begin{block}{Scenario}
+      \begin{itemize}
+	\item Nation A and B are allies: $a_2=0$ and $b_1=0$. Nation C is stronger than both of them $p>m,n$. 
+	\item \textbf{Takeaway: } Nation B and C are in an arms race. The trajectories are \textbf{unstable}.
+      \end{itemize}
+    \end{block}
+  \end{column}
+\end{columns}
 \end{frame}
-  \begin{frame}{Richardson 3D $r>0, s,q<0$}
+\begin{frame}{Richardson 3D: Beef?} 
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
     \begin{figure}
       \centering
-      \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_3D_1_-1_-1.png}
+      \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_0.25_3D_-1_-1_1.png}
     \end{figure}
+  \end{column}
+  \begin{column}{0.4\textwidth}
+    \begin{block}{Scenario}
+      \begin{itemize}
+	\item Nations A and B are the same strength $m=n$. They are pacifists. $a_2=a_3=b_1=b_3=0$. They have a disposition of good will $r=s=-1$.
+	\item Nation C is four times as strong as them. $p=\frac{1}{4}$. They have beef $q=1$. They are also spending money on both of the pacifist nations.
+      \end{itemize}
+    \end{block}
+  \end{column}
+\end{columns}
+\end{frame}
+\begin{frame}{Richardson 3D: Offended!} 
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_1_0.25_3D_-1_-1_1.png}
+    \end{figure}
+  \end{column}
+  \begin{column}{0.4\textwidth}
+    \begin{block}{Scenario}
+      \begin{itemize}
+	\item Nation C ticks off nation A. Their disposition flips from $r=-1$ to $r=1$ (aggrieved). 
+	\item They take the bait and start spending on nation C $a_3=1$.
+	\item An arms race ensues! ($\textbf{unstable}$)
+      \end{itemize}
+    \end{block}
+  \end{column}
+\end{columns}
+\end{frame}
+\section{Conclusion}
+\begin{frame}{Conclusion}
+  Mathematical modelling can offer an interesting vantage point for coneptualizing geopolitical scenarios.
+  \begin{block}{Summary}
+    \begin{itemize}
+      \item \textbf{Scenario 1:} A strong nation stabilizes the arms race of two weaker nations.
+      \item \textbf{Scenario 2:} Nation A and B are weaker nations who are allies. They're spending on the stronger nation C escalates to an arms race.
+      \item \textbf{Scenario 3:} Nation C is antagonistic and nations B and C are peaceful. Nation A gets offended by nation C and starts spending on nation C. In spite of the pacifist, neutral ally in nation B: an arms race ensues.
+    \end{itemize}
+  \end{block}
 \end{frame}
 \begin{frame}{Future Goals}
   \begin{itemize}
     \item Streamline the codebase for less plugging in of parameters to generate the plots
+    \item Study the drift terms $\left[g_1,g_2,g_3\right]$ more in depth
     \item Transform into hyperbolic coordinates
       \begin{equation*}
 	\left[u,v\right]^T=\left[A\cosh(\sqrt{ab}t+\phi),A\sinh(\sqrt{ab}t+\phi)\right]^T
