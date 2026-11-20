@@ -16,4 +16,5 @@ octave-workspace
 *.cb2
 *.bbl
 *.blg
+*main-blx.bib
 

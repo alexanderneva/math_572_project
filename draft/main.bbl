@@ -5,9 +5,19 @@ Boyce, W.~E. and DiPrima, R.~C. (2013).
 \newblock {\em Elementary Differential Equations and Boundary Value Problems}.
 \newblock John Wiley \& Sons, Hoboken, NJ, 10th edition.
 
+\bibitem[Li, 2018]{Li2018}
+Li, M.~Y. (2018).
+\newblock {\em An Introduction to Mathematical Modeling of Infectious Diseases}, volume~2 of {\em Mathematics of Planet Earth}.
+\newblock Springer International Publishing, 1 edition.
+
 \bibitem[Moghadas and Jaberi-Douraki, 2019]{MoghadasJaberiDouraki2019}
 Moghadas, S.~M. and Jaberi-Douraki, M. (2019).
 \newblock {\em Mathematical Modelling: A Graduate Textbook}.
 \newblock Wiley, 1 edition.
+
+\bibitem[Richardson, 1960]{richardson1960arms}
+Richardson, L.~F. (1960).
+\newblock {\em Arms and Insecurity: A Mathematical Study of the Causes and Origins of War}.
+\newblock Boxwood Press.
 
 \end{thebibliography}

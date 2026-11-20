@@ -10,6 +10,7 @@
   Mutual fear model abstract
 \end{abstract}
 \section{Introduction}
+\cite{richardson1960arms}
 \section{Formulation of the Mathematical Model}
 \subsection{Model 1}
 The initial value problem for model 1 is given by
@@ -50,7 +51,209 @@ where
 \]
 
 \section{Solution to the Problem}
+\subsection{Undamped Case}
+\subsubsection{Undamped Analysis}
+The initial value problem for the undamped model is given by
+\begin{equation}\label{eq:model1}
+  \begin{bmatrix}
+    x^{\prime}\\
+    y^{\prime}
+  \end{bmatrix} = 
+  \begin{bmatrix}
+    0 & a \\
+    b & 0 
+    \end{bmatrix}
+    \begin{bmatrix}
+      x \\ 
+      y
+  \end{bmatrix},\quad x(0)=x_0,~y(0)=y_0,\quad a,b>0
+\end{equation}
+where $a$ and $b$ represent the spending per unit time of nations $A$ and $B$ respectively.
+\subsubsection{Eigenvalues Determine Stability}
+  The eigenvectors $v_1,v_2$ and eigenvalues $\lambda_1,\lambda_2$ of \autoref{eq:model1} are
+\begin{equation*}
+  \lambda_1,\lambda_2 = \pm \sqrt{ab},\quad P:=\left[v_1~v_2\right]=\begin{bmatrix}\sqrt{\frac{a}{a+b}} & \sqrt{\frac{a}{a+b}}\\
+  \sqrt{\frac{b}{a+b}} & -\sqrt{\frac{b}{a+b}}
+\end{bmatrix}
+\end{equation*}
+$\text{sign}(\lambda_1)\neq\text{sign}(\lambda_2)$ implies $p^\star$ is a saddle node.
+\begin{equation}
+  \psi(t) = c_1e^{\sqrt{ab}t}v_1 + c_2 e^{-\sqrt{ab}t}v_2,\quad c_1,c_2 \in \R
+\end{equation}
+\begin{figure}
+  \centering 
+  \includegraphics[height=0.9\textheight,width=\textwidth]{../figures/model_1_curves.png}
+  \caption{Hyperbolae}
+\end{figure}
+\section{2 Nations}
+\subsection{Damped Case}
+The initial value problem for the Richardson model is given by
+\begin{equation}\label{eq:richardson}
+  \begin{bmatrix}
+    x^{\prime}\\
+    y^{\prime}
+  \end{bmatrix} = 
+  \begin{bmatrix}
+    -m & a \\
+    b & -n 
+    \end{bmatrix}
+    \begin{bmatrix}
+      x \\ 
+      y
+      \end{bmatrix}+\begin{bmatrix}r \\ s\end{bmatrix},~x(0)=x_0,~y(0)=y_0,~a,b,m,n>0,r,s\in\R
+\end{equation}
+\subsection{Routh-Hurwitz}
+  Let \[A:=
+  \begin{bmatrix}
+    -m & a \\
+    b & -n 
+  \end{bmatrix}\]
+  For characteristic polynomial $p(\lambda)$, recall the 2D Routh-Hurwitz conditions\footcite[Chap. 3]{MoghadasJaberiDouraki2019}. That is, $A$ defines a stable system if in
+  \[
+    p(\lambda)=\lambda^2-(\text{Tr }A)\lambda+\det{A}
+  \]
+  $\text{Tr }A < 0$ and $\det{A}>0$.
+  Since the $\text{Tr }A<0$ (\autoref{eq:tr}), the character of our solutions can be seen from the determinant of our matrix $A$.
+%\begin{block}{Interpretation of Determinant}
+%\begin{align*}
+%  \det{A} &=  \begin{vmatrix}
+%      -m & a \\
+%      b & -n 
+%    \end{vmatrix} < 0
+%	  &\implies mn-ab < 0\\
+%	  &\implies \frac{1}{\frac{m}{a}} < \frac{n}{b}
+%  \end{align*}
+%  \begin{itemize}
+%    \item \textbf{Reciprical Relationship}
+%  \end{itemize}
+%\end{block}
+
+  Let $A$ denote the matrix from \autoref{eq:richardson} and $w:=\left[r,s\right]^T$. Assuming that $\det{A}\neq0$, we can find the equilibrium $p^\star=\left(x^\star,y^\star\right)$. By solving 
+\subsection{Finding the Equilibrium}
+    \begin{align*}
+      0&=Ap^\star+w\\
+      \implies p^\star&=-A^{-1}w.
+    \end{align*}
+  We can shift coordinates to center our system at the equilibrium by making the transformation
+    \begin{equation}
+      \tilde{v}=v-p^\star
+    \end{equation}
+  \subsection{Animosity}
+  \begin{itemize}
+    \item Equilibrium shifts from quadrant I to III as the determinant changes sign
+  \end{itemize}
+
+\subsection{Observations}
+  \begin{itemize}
+    \item \textbf{Routh-Hurwitz} $det(A)>0$ shows stability 
+    \item \textbf{nullclines} indicate direction changes of the vector field
+    \item \textbf{Grievances:} inspite of good will, in the case that economic dampening does not outweigh spending $\det{A} <0$ positive feedback loop ensues. (Arms race)
+\end{itemize}
+\section{3 Nations}
+    \begin{equation}\label{eq:nation}
+    \begin{bmatrix}
+      x^\prime \\ y^\prime \\ z^\prime
+    \end{bmatrix}
+    = \begin{bmatrix}
+      -m & a_{2} & a_{3} \\
+      b_1 & -n & b_3 \\
+      c_1 & c_2 & -p
+      \end{bmatrix}
+      \begin{bmatrix}
+	x \\ y \\ z
+	\end{bmatrix}+\begin{bmatrix}g_{1}\\g_{2}\\g_{3}\end{bmatrix},\quad a_2,a_3,b_1,b_3,c_1,c_2,m,n,p>0
+  \end{equation}
+  \[ \begin{bmatrix}x(0)&y(0)&z(0)\end{bmatrix}^T=\begin{bmatrix}x_0 & y_0 & z_0\end{bmatrix}^T
+\]
+    \begin{itemize}
+      \item $m$,$n$, as in the previous model \autoref{eq:richardson}
+      \item $a_i$ spending rate of nation of nation A on nation B and C. Defined similarly for nations B and C
+      \item $p$ economic decay of nation 3
+      \item $g_i\in\R$ is the goodwill of nation $i$
+    \end{itemize}
+
+\subsection{Phase Plane Analysis}
+  The coordinate transformation to $p^\star$ is of the same form as the 2D case. Thus, we can analyze the character of $A$, and employ the 3D Routh-Hurwitz criteria to judge the solutions. The 3D Routh-Hurwitz conditions are\cite{Li2018}
+\subsubsection{3D Routh-Hurwitz}
+  \begin{equation}
+    \text{Tr }A<0,\quad \det{A}<0,\quad\Lambda\text{Tr }A-\det{A} <0
+  \end{equation}
+  where $\Lambda$ is the sum of the $2\times 2$ principal minors of $A$.
+  \begin{equation}
+    \Lambda = \begin{vmatrix}-n& b_3\\
+	       c_2 & -p\end{vmatrix}+\begin{vmatrix}-m & a_3\\ c_1 & -p\end{vmatrix} + \begin{vmatrix}-m & a_2 \\ b_1 & -n\end{vmatrix}
+  \end{equation}
+  Expanding along row 1, we have
+    \begin{align*}
+      \det{A}&=\begin{vmatrix}
+      -m & a_{2} & a_{3} \\
+      b_1 & -n & b_3 \\
+      c_1 & c_2 & -p
+      \end{vmatrix}\\
+	     &= -m\begin{vmatrix}-n& b_3\\
+	       c_2 & -p\end{vmatrix}-a_2\begin{vmatrix}b_1 & b_3\\ c_1 & -p\end{vmatrix}+ a_3\begin{vmatrix}b_1 & -n \\ c_1 & c_2\end{vmatrix}\\
+		   &= -mnp +mb_3 c_2 + pa_1 b_2 + a_2 b_3 c_1 + a_3 b_1 c_2 + n a_3 c_ 2
+    \end{align*}
+\section{Richardson 3D: Scenarios}
+\subsection{Richardson 3D: Peaceful times? Equilibrium at Origin}
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_3D_0_0_0.png}
+    \end{figure}
+      \begin{itemize}
+	\item Strong Nation A $m=1$, weaker Nations B and C
+	\item Nations B and C are twice as weak but $b_3=1$ and $c_2=1$: they are stocking up weapons on eachother
+	\item \textbf{Takeaway: } Nation A's lower spending and economic strength, de-escalate the arms race between Nation B and C (\textbf{stable})
+      \end{itemize}
+\subsection{Richardson 3D: Allies?}
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_0.5_3D_0_0_0.png}
+    \end{figure}
+      \begin{itemize}
+	\item Nation A and B are allies: $a_2=0$ and $b_1=0$. Nation C is stronger than both of them $p>m,n$. 
+	\item \textbf{Takeaway: } Nation B and C are in an arms race. The trajectories are \textbf{unstable}.
+      \end{itemize}
+\subsection{Richardson 3D: Beef?} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_0.25_3D_-1_-1_1.png}
+    \end{figure}
+      \begin{itemize}
+	\item Nations A and B are the same strength $m=n$. They are pacifists. $a_2=a_3=b_1=b_3=0$. They have a disposition of good will $r=s=-1$.
+	\item Nation C is four times as strong as them. $p=\frac{1}{4}$. They have beef $q=1$. They are also spending money on both of the pacifist nations.
+      \end{itemize}
+\subsection{Richardson 3D: Offended!} 
+    \begin{figure}
+      \centering
+      \includegraphics[height=0.9\textheight,width=\textwidth,keepaspectratio]{../figures/richardson_1_0.25_3D_-1_-1_1.png}
+    \end{figure}
+      \begin{itemize}
+	\item Nation C ticks off nation A. Their disposition flips from $r=-1$ to $r=1$ (aggrieved). 
+	\item They take the bait and start spending on nation C $a_3=1$.
+	\item An arms race ensues! ($\textbf{unstable}$)
+      \end{itemize}
+\section{Conclusion}
+  Mathematical modelling can offer an interesting vantage point for coneptualizing geopolitical scenarios.
+  \subsection{Summary}
+    \begin{itemize}
+      \item \textbf{Scenario 1:} A strong nation stabilizes the arms race of two weaker nations.
+      \item \textbf{Scenario 2:} Nation A and B are weaker nations who are allies. They're spending on the stronger nation C escalates to an arms race.
+      \item \textbf{Scenario 3:} Nation C is antagonistic and nations B and C are peaceful. Nation A gets offended by nation C and starts spending on nation C. In spite of the pacifist, neutral ally in nation B: an arms race ensues.
+    \end{itemize}
 \section{Interpretation of the Results}
+
+\subsection{Interpretation}
+  We can see that the only negative contribution to the determinant comes from the combined economic damping term 
+  \[-mnp\]
+  whereas, the more nations are spending on one another, the more the determinant is pushed toward positivity (instability).
+  \subsection{Intepretation of the Damped Model}
+  \begin{itemize}
+    \item \textbf{Economic dampening:} $m,n$ provide economic dampening in proportion to a nations own spending. These terms provide stability to the system since 
+      \begin{equation}\label{eq:tr}\text{Tr }A = -m-n <0\end{equation}
+    \item \textbf{Drift Term:} $r$ and $s$ determine how far the equilibrium $p^\star$ will be from $(0,0)$.
+  \end{itemize}
+
 \section{Discusssion}
 
 
@@ -325,20 +528,32 @@ If we assume $R$ is invertible, which will be the case so long as we still let $
 \begin{equation*}
   \left(x^\star,y^\star\right)=\left(\frac{nr+as}{mn-ab},\frac{br+ms}{mn-ab}\right)
 \end{equation*}
+\subsection{Coordinate Shift}
+    \begin{align*}
+      \tilde{v}^{\prime}=v^\prime
+			&= Av+w\\
+			&= A(\tilde{v}+p^\star)+w\\
+			&= A\tilde{v}-AA^{-1}w+w\\
+			&= A\tilde{v}
+    \end{align*}
+  \begin{block}{Initial Conditions}
+    \[
+      \tilde{v}(0)= v(0)-p^\star
+    \]
 Consider the coordinate change
 \begin{equation*}
   \begin{bmatrix}x \\ y\end{bmatrix}= \begin{bmatrix}u+x^\star \\ v + y^\star\end{bmatrix}
 \end{equation*}
-In the new coordinates, we have
-\begin{align*}
-  \begin{bmatrix}u^\prime\\v^\prime\end{bmatrix}=\begin{bmatrix}x^\prime\\y^\prime\end{bmatrix}&=R\begin{bmatrix}x\\y\end{bmatrix}+\begin{bmatrix}r\\s\end{bmatrix}\\&=R\begin{bmatrix}u+x^\star \\ v + y^\star\end{bmatrix}+\begin{bmatrix}r\\s\end{bmatrix}\\
-											       &=R\begin{bmatrix}u\\ v\end{bmatrix}-RR^{-1}\begin{bmatrix}r\\s\end{bmatrix}+\begin{bmatrix}r\\s\end{bmatrix}&\text{\autoref{qstar}}\\
-											       &=R\begin{bmatrix}u\\v\end{bmatrix}
-\end{align*}
-Thus, we can look at the transformed system in $(u,v)$ coordinates
-\begin{equation}\label{uvrichardson}
-\begin{bmatrix}u^\prime\\v^\prime\end{bmatrix}=R\begin{bmatrix}u\\v\end{bmatrix},\quad u_0=x_0-x^\star,v_0=y_0-y^\star
-\end{equation}
+%In the new coordinates, we have
+%\begin{align*}
+%  \begin{bmatrix}u^\prime\\v^\prime\end{bmatrix}=\begin{bmatrix}x^\prime\\y^\prime\end{bmatrix}&=R\begin{bmatrix}x\\y\end{bmatrix}+\begin{bmatrix}r\\s\end{bmatrix}\\&=R\begin{bmatrix}u+x^\star \\ v + y^\star\end{bmatrix}+\begin{bmatrix}r\\s\end{bmatrix}\\
+%											       &=R\begin{bmatrix}u\\ v\end{bmatrix}-RR^{-1}\begin{bmatrix}r\\s\end{bmatrix}+\begin{bmatrix}r\\s\end{bmatrix}&\text{\autoref{qstar}}\\
+%											       &=R\begin{bmatrix}u\\v\end{bmatrix}
+%\end{align*}
+%Thus, we can look at the transformed system in $(u,v)$ coordinates
+%\begin{equation}\label{uvrichardson}
+%\begin{bmatrix}u^\prime\\v^\prime\end{bmatrix}=R\begin{bmatrix}u\\v\end{bmatrix},\quad u_0=x_0-x^\star,v_0=y_0-y^\star
+%\end{equation}
 We can solve it as we did the mutual fear model \autoref{model1}. We employ the Routh Hurwitz criteria from \\ \cite[Chapter 3.]{MoghadasJaberiDouraki2019} which says that \autoref{richardson} is a stable system iff $\text{Tr }R<0$ and $\det{R}>0$. We have
 \begin{align*}
   \text{Tr }J = -(m+n)<0\quad\forall m,n>0\\
@@ -352,4 +567,23 @@ We can solve it as we did the mutual fear model \autoref{model1}. We employ the 
   \label{phase2}
 \end{figure}
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.7\textheight,width=\textwidth]{../figures/richardson_curves_1_1.png}
+  \label{phase3}
+\end{figure}
+
+\subsection{Nation B Good Will $r>0,s<0$}
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.9\textheight,width=\textwidth]{../figures/richardson_curves_1_-1.png}
+  \label{phase4}
+\end{figure}
+
+\subsection{Common Good Will $r,s<0$}
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.9\textheight,width=\textwidth]{../figures/richardson_curves_-1_-1.5.png}
+  \label{phase5}
+\end{figure}
 \end{document}

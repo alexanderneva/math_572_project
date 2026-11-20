@@ -24,7 +24,7 @@ x_star = zeros(2);
 t = linspace(-2,2,200);
 sol = @(t,u) u(1)*xi_1 .* exp(omega*t) + u(2)*xi_2 .* exp(-omega*t);
 fig = figure();
-subplot(1,2,1);hold on;
+subplot(2,1,1);hold on;
 for k = 1:size(U,2)
   x = sol(t,U(:,k))(1,:);
   y = sol(t,U(:,k))(2,:);
@@ -72,7 +72,7 @@ grid on;
 axis on;
 sample = randperm(size(U,2),7);
 samples = U(:,sample);
-subplot(1,2,2);
+subplot(2,1,2);
 hold on;
 for k=1:size(samples,2)
   traj = sol(t,samples(:,k));
@@ -97,7 +97,7 @@ legend('show');
 grid on;
 %waitfor(gcf);
 %hold off;
-print('figures/model_1_curves.png', '-dpng', '-S2100,1300');
+print('figures/model_1_curves.png', '-dpng', '-S1300,1300');
 
 
 %vecs = linspace(-3,3,20);
